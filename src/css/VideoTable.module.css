@@ -1,0 +1,94 @@
+.container{
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+.table_input_wrapper{
+    padding: 0 10px 0 10px
+}
+.topnav_container{
+    background-color: #e9ecef;
+    padding: 4px 10px 8px 10px;
+    border-bottom: 1px solid gray;
+    border-radius: 5px 5px 0 0;
+}
+.table_icon{
+    float: left;
+    font-size: 20px;
+}
+.table_name{
+    margin-left: 35px;
+    font-size: 20px;
+}
+.table_input_container{
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.table_select{
+    background: none;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.table_search{
+    background-color: none;
+    padding: 5px 10px 5px 10px;
+    outline: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+
+}
+.table_container{
+    /* background-color: pink; */
+    /* border: 1px solid gray; */
+    /* border-radius: 5px; */
+    overflow: auto;
+    margin-top: 10px;
+}
+.th1{
+
+}
+.th2{
+
+}
+.th3{
+    display: flex;
+}
+.th4{
+    display: flex;
+}
+.th5{
+    display: flex;
+}
+.th6{
+
+}
+.th7{
+
+}
+.th8{
+
+}
+.th9{
+
+}
+.th10{
+
+}
+.shortIcon{
+    float: right;
+    margin: 5px 0 0 0px;
+    color: gray;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.shortIcon:hover{
+    color: black;
+}
+.table_navigation{
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0 20px 0;
+}
+

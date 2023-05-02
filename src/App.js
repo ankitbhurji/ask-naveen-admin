@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { publicRoutes, authProtectedRoutes } from "./routes";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
+import SendOtp from "./pages/Auth/SendOtp";
+import AuthMiddleware from "./routes/Routes";
+
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <React.Fragment>
+      <Routes>
+        {publicRoutes.map((route, idx)=>(
+          <Route path={route.path} element={route.component} key={idx} exact={true}/>
+        ))}
+
+        {authProtectedRoutes.map((route, idx)=>(
+          <Route path={route.path} element={ <AuthMiddleware>{route.component}</AuthMiddleware>} key={idx} exact={true} />
+        ))}
+      </Routes>
+
+    </React.Fragment>
   );
 }
 

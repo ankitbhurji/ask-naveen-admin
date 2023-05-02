@@ -1,0 +1,217 @@
+.container{
+    /* width: 1400px; */
+  }
+  .sidebar {
+    height: 100vh;
+    width: 0;
+    position: fixed;
+    /* position: absolute; */
+    z-index: 1;
+    top: 0;
+    left: 0;
+    /* background-color: #111; */
+    /* background-color: #353b48; */
+    background-color: #fff;
+    overflow-x: hidden;
+    transition: 0.2s;
+    padding-top: 20px;
+    /* overflow: hidden; */
+  }
+  .sidebar {
+    /* padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 18px;
+    color: #818181;
+    display: block;
+    transition: 0.1s; */
+  }
+  .sidebar{
+    color: #f1f1f1;
+  }
+  .sidebarOpen{
+    width: 250px;
+    transition: 0.5s;
+  }
+  .user_info_container{
+    /* background-color: red; */
+    display: flex;
+    margin: 0 auto 0;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 20px;
+    padding: 10px 20px 10px 20px;
+  
+  }
+  .user_logo{
+    color: #4c7cf3;
+  }
+  .user_name{
+    color: #4c7cf3;
+    font-weight: bold;
+    letter-spacing: 1px;
+  }
+  hr{
+    border-top: 1px solid #4c7cf3;
+  }
+  .sidebar_list_container_dashboard{
+    background-color: #DBE5FD;
+    margin: 0 auto 0;
+    display: flex;
+    justify-content: space-between;
+    color: #4c7cf3;
+    font-size: 18px;
+    width: 100%;
+    padding: 10px 20px 10px 20px;
+    margin-bottom: 1px;
+  }
+  .sidebar_list_dashboard{
+    display: flex;
+  }
+  .list_name_dashboard{
+    margin-left: 14px;
+  }
+  .sidebar_list_container{
+    /* background-color: red; */
+    margin: 0 auto 0;
+    display: flex;
+    justify-content: space-between;
+    color: #777777;
+    font-size: 18px;
+    width: 100%;
+    padding: 10px 20px 0 20px;
+    margin-bottom: 1px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .sidebar_list_container:hover{
+    background-color: #DBE5FD;
+    color: #4c7cf3;
+  }
+  .sidebar_list{
+    display: flex;
+  }
+  .list_name{
+    margin-left: 14px;
+  }
+  .subList_name{
+  
+  }
+  ul{
+    list-style-type: none;
+  }
+  .sidebar_ul{
+    background-color:#DBE5FD;
+    width: 100%;
+  }
+  .sidebar_li{
+    color: #777777;
+    margin-bottom: 15px;
+    padding: 0 0 0 20px;
+  }
+  li:hover{
+    color: #4c7cf3;
+    cursor: pointer;
+  }
+  a{
+    text-decoration: none;
+    color: gray;
+  }
+  @media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+  }
+  
+  
+  
+  .main{
+    transition: margin-left .5s;
+    padding: 16px;
+    transition: 0.5s;
+  }
+  .mainOpen{
+    margin-left: 250px;
+    transition: 0.5s;
+  }
+  .sidebarClose{
+    /* width: 0; */
+    margin-left: 0;
+    transition: 0.2s;
+  }
+  .main_container{
+    /* background-color: red; */
+    /* padding: 10px; */
+    /* height: 200vh; */
+    /* margin-left: 10px; */
+  }
+  .top_navbar_container{
+    background-color: #353b48;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+  .top_navbar{
+    display:  flex;
+    padding: 10px 50px 10px 50px;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .navbar_icon{
+    cursor: pointer;
+    color: white;
+    font-size:25px;
+    padding: 0 0 0 10px;
+    background-color: rgba(0,0,0,0.09);
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+  }
+  .input_container{
+    /* background-color: red; */
+    /* width: 20%; */
+  }
+  .navbar_search{
+    border: none;
+    background-color: #4a5263;
+    padding: 10px 0 10px 20px;
+    border-radius: 20px 0 0 20px;
+    color: white;
+    font-size: 15px;
+  }
+  .search_button{
+    border-radius:0 20px 20px 0;
+    border: none;
+    background-color: #4a5263;
+    padding: 10px 20px 10px 20px;
+    color: white;
+    font-weight: 600;
+    letter-spacing: 1px;
+    font-size: 15px;
+  }
+  .user_icon{
+    /* background-color: red; */
+    font-size: 25px;
+    color: white;
+    cursor: pointer;
+  }
+  .drop_menu{
+    
+  }
+  .user_action{
+    display: flex;
+    /* background-color: red; */
+    width: 70%;
+    margin: 0 auto 0;
+  }
+  .user_action>a{
+    font-weight: bold;
+  }
+  .component_container{
+    /* background-color: cyan; */
+    /* height: 50px; */
+    margin: 10px;
+  }
+  
+  
+  
+  
+  
