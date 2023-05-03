@@ -132,10 +132,10 @@ function ChennelTable() {
                                                 </div>
                                                 <ul className="dropdown-menu">
                                                     <li>
-                                                        <a onClick={()=>{handleEditModal(channel.id)}} className="dropdown-item" href="#">Edit</a>
+                                                        <a onClick={()=>{handleEditModal(channel.id)}} className="dropdown-item">Edit</a>
                                                     </li>
                                                     <li>
-                                                        <a onClick={()=>{handleDelete(channel.id)}} className="dropdown-item" href="#">Delete</a>
+                                                        <a onClick={()=>{handleDelete(channel.id)}} className="dropdown-item">Delete</a>
                                                     </li>
                                                 </ul>
                                             </td>

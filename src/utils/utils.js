@@ -8,7 +8,7 @@ import { SettingModel } from '../models';
 // import external from '../Config/Config';
 
 
-
+ 
 // Login Quries.
 class LoginQuries{
 
@@ -18,7 +18,6 @@ class LoginQuries{
     ]))
     return allAdmin
    }
-
    async updateAdminOtp(user, otp){
     if(user, otp){
         try{
@@ -34,6 +33,12 @@ class LoginQuries{
         }
     }
     // const updateOtp = await DataStore.query(UserModel,)
+   }
+   async validatingAdmin(token){
+    if(token){
+        const validateAdmin = await DataStore.query(UserModel, token)
+        return validateAdmin
+    }
    }
 }
 
@@ -174,7 +179,7 @@ class ChannelQuries{
         ]))
         return searchChannel
     }
-    async channelDetails(channelId){
+    async channelDetails(channelId){ 
         if(channelId){
             const details = await DataStore.query(ChannelModel, channelId)
             return details

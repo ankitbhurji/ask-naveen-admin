@@ -2,7 +2,7 @@ import { IoMdSend } from 'react-icons/io';
 import {LoginQuries} from '../../utils/utils'
 import { useEffect, useState } from 'react';
 import ValidateOtp from './ValidateOtp';
-
+ 
 
 function SendOtp() {
 

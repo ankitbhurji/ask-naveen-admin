@@ -10,6 +10,7 @@ import PageNotFound from "../pages/Errors/PageNotFound"
 
 
 const authProtectedRoutes = [
+    {path:'/dashboard', component:<Dashboard/>},
     {path:'/dashboard/user', component:<Dashboard COMPONENT={UserTable}/>},
     {path:'/dashboard/channel', component:<Dashboard COMPONENT={ChannelTable}/>},
     {path:'/dashboard/video', component:<Dashboard COMPONENT={VideoTable}/>},

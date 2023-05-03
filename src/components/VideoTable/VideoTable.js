@@ -191,10 +191,10 @@ function VideoTable() {
                                             </div>
                                             <ul className="dropdown-menu">
                                                 <li onClick={()=>{handleEditModal(videoData.id)}}>
-                                                    <a className="dropdown-item" href="#">Edit</a>
+                                                    <a className="dropdown-item">Edit</a>
                                                 </li>
                                                 <li onClick={()=>{handleDelete(videoData.id)}}>
-                                                    <a className="dropdown-item" href="#">Delete</a>
+                                                    <a className="dropdown-item">Delete</a>
                                                 </li>
                                             </ul>
                                         </td>

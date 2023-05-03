@@ -17,7 +17,7 @@ import { RiLogoutCircleFill } from 'react-icons/ri';
 function Dashboard(props) {
 
     const {COMPONENT} = props
-    const [check, setCheck] = useState(false)
+    const [check, setCheck] = useState(true)
 
     function openNav(){
         setCheck(!check)
@@ -132,7 +132,8 @@ function Dashboard(props) {
                     </div>
                     <div className={styles.component_container}>
                         <main>
-                            <COMPONENT/>
+                            {COMPONENT &&
+                            <COMPONENT/>}
                         </main>
                     </div>
                 </div>

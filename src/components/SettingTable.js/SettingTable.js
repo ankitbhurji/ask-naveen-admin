@@ -21,10 +21,16 @@ function SettingTable() {
     // console.log(settingModelDetails);
 
     function handleChangePage(event, newPage){
-        setTableSetting({...tableSetting, page:newPage-1})
+        setTableSetting({
+            ...tableSetting, 
+            page:newPage-1
+        })
     }
     function handlePageLimit(pageSize){
-        setTableSetting({...tableSetting, pageLimit:parseInt(pageSize)})
+        setTableSetting({
+            ...tableSetting, 
+            pageLimit:parseInt(pageSize)
+        })
     }
     async function getSettingModelData(page, pageLimit){
         const settingQueries = new SettingQueries
@@ -33,7 +39,11 @@ function SettingTable() {
         setSettingModelData(settingModelDataByLimit)
         
         const paginationPageNumber = Math.ceil(settingModelDataLength/tableSetting.pageLimit)
-        setTableSetting({...tableSetting, paginationCount:paginationPageNumber, settingModelDataLength:settingModelDataLength})
+        setTableSetting({
+            ...tableSetting, 
+            paginationCount:paginationPageNumber, 
+            settingModelDataLength:settingModelDataLength
+        })
     }
     async function handleSearch(e){
         setTableSetting({
@@ -59,7 +69,12 @@ function SettingTable() {
         if(tableSetting.searchFieldInSettingModel==''){
             getSettingModelData(tableSetting.page, tableSetting.pageLimit)
         }
-    },[tableSetting.page, tableSetting.pageLimit, tableSetting.searchFieldInSettingModel, isEditModalOpen])
+    },[
+        tableSetting.page, 
+        tableSetting.pageLimit, 
+        tableSetting.searchFieldInSettingModel, 
+        isEditModalOpen
+    ])
 
 
     return ( 
@@ -73,21 +88,29 @@ function SettingTable() {
             <div className={styles.table_input_wrapper}>
                 <div className={styles.table_input_container}>
                     <div>
-                        <select onChange={(e)=>{handlePageLimit(e.target.value)}} className={styles.table_select}>
+                        <select
+                         onChange={(e)=>{handlePageLimit(e.target.value)}} 
+                         className={styles.table_select}
+                        >
                             <option>10</option>
                             <option>20</option>
                             <option>30</option>
                         </select>
                     </div>
                     <div>
-                        <input onKeyDown={handleSearch} onChange={handleSearch} placeholder='Search...' className={styles.table_search} type='search'/>
+                        <input 
+                        onKeyDown={handleSearch} 
+                        onChange={handleSearch} 
+                        placeholder='Search...' 
+                        className={styles.table_search} 
+                        type='search'
+                        />
                     </div>
                 </div>
                 <div className={styles.table_container}>
                     <table className="table table-bordered">
                         <thead>
                         <tr>
-                            <th className={styles.th1}>#</th>
                             <th className={styles.th1}>DisplayName</th>
                             <th className={styles.th2}>SettingKey</th>
                             <th className={styles.th3}>SettingValue</th>
@@ -100,7 +123,6 @@ function SettingTable() {
                             settingModelData.map((settingModel, index)=>{
                                 return(
                                     <tr key={index}>
-                                        <td>{index+1}</td>
                                         <td>{settingModel.displayName}</td>
                                         <td>{settingModel.settingKey}</td>
                                         <td>{settingModel.settingValue}</td>
@@ -109,10 +131,14 @@ function SettingTable() {
                                             </div>
                                             <ul className="dropdown-menu">
                                                 <li>
-                                                    <a onClick={()=>{handleEditModal(settingModel.id)}} className="dropdown-item" href="#">Edit</a>
+                                                    <a 
+                                                    onClick={()=>{handleEditModal(settingModel.id)}} 
+                                                    className="dropdown-item"
+                                                    >Edit
+                                                    </a>
                                                 </li>
                                                 {/* <li>
-                                                    <a className="dropdown-item" href="#">Delete</a>
+                                                    <a className="dropdown-item">Delete</a>
                                                 </li> */}
                                             </ul>
                                         </td>
@@ -126,10 +152,19 @@ function SettingTable() {
                 <div className={styles.table_navigation}>
                     <div className={styles.item_count}>Total Records: {tableSetting.settingModelDataLength}</div>
                     <div className={styles.pagination}>
-                        <Pagination onChange={handleChangePage} count={tableSetting.paginationCount} variant="outlined" shape="rounded" />
+                        <Pagination 
+                        onChange={handleChangePage} 
+                        count={tableSetting.paginationCount} 
+                        variant="outlined" 
+                        shape="rounded" 
+                        />
                     </div>
                 </div>
-                <EditSettingModal isEditModalOpen={isEditModalOpen} handleEditModal={handleEditModal} settingModelDetails={settingModelDetails}/>
+                <EditSettingModal 
+                isEditModalOpen={isEditModalOpen} 
+                handleEditModal={handleEditModal} 
+                settingModelDetails={settingModelDetails}
+                />
             </div>
             <ToastContainer />
         </div>
