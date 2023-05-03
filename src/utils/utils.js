@@ -445,6 +445,25 @@ class SettingQueries{
         )
         return searchSettingModelData
     }
+    async settingModelDetails(settingModelId){
+        if(settingModelId){
+            const details = await DataStore.query(SettingModel, settingModelId)
+            return details
+        }
+    }
+    async updateSettingModelDetails(details){
+        const original = await DataStore.query(SettingModel, details.id)
+        if(original){
+            const updateDetails = await DataStore.save(
+                SettingModel.copyOf(original, update=>{
+                    update.displayName = details.displayName
+                    update.settingKey = details.settingKey
+                    update.settingValue = details.settingValue
+                })
+            )
+            return updateDetails
+        }
+    }
 }
 
 export  {LoginQuries, Quries, ChannelQuries, VideoQuries, AdminVideoQuries, SettingQueries}
