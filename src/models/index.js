@@ -21,9 +21,11 @@ const UserTypeEnum = {
   "ADMIN": "ADMIN"
 };
 
-const { VideoClickHistoryModel, ChannelHistoryModel, RollNumberModel, VideoCommentModel, VideoRatingModel, AdminVideoModel, ChannelModel, DiscussionModel, SettingModel, VideoModel, UserModel } = initSchema(schema);
+const { TagModel, NotificationTable, VideoClickHistoryModel, ChannelHistoryModel, RollNumberModel, VideoCommentModel, VideoRatingModel, AdminVideoModel, ChannelModel, DiscussionModel, SettingModel, VideoModel, UserModel } = initSchema(schema);
 
 export {
+  TagModel,
+  NotificationTable,
   VideoClickHistoryModel,
   ChannelHistoryModel,
   RollNumberModel,

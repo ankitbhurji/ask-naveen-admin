@@ -5,6 +5,10 @@
  **************************************************************************/
 
 export { default as studioTheme } from "./studioTheme";
+export { default as TagModelCreateForm } from "./TagModelCreateForm";
+export { default as TagModelUpdateForm } from "./TagModelUpdateForm";
+export { default as NotificationTableCreateForm } from "./NotificationTableCreateForm";
+export { default as NotificationTableUpdateForm } from "./NotificationTableUpdateForm";
 export { default as VideoClickHistoryModelCreateForm } from "./VideoClickHistoryModelCreateForm";
 export { default as VideoClickHistoryModelUpdateForm } from "./VideoClickHistoryModelUpdateForm";
 export { default as RollNumberModelCreateForm } from "./RollNumberModelCreateForm";

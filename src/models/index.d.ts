@@ -23,6 +23,76 @@ export enum UserTypeEnum {
 
 
 
+type EagerTagModel = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<TagModel, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly title?: string | null;
+  readonly tags?: string | null;
+  readonly link?: string | null;
+  readonly status?: string | null;
+  readonly search?: string | null;
+  readonly addDateTime?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyTagModel = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<TagModel, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly title?: string | null;
+  readonly tags?: string | null;
+  readonly link?: string | null;
+  readonly status?: string | null;
+  readonly search?: string | null;
+  readonly addDateTime?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type TagModel = LazyLoading extends LazyLoadingDisabled ? EagerTagModel : LazyTagModel
+
+export declare const TagModel: (new (init: ModelInit<TagModel>) => TagModel) & {
+  copyOf(source: TagModel, mutator: (draft: MutableModel<TagModel>) => MutableModel<TagModel> | void): TagModel;
+}
+
+type EagerNotificationTable = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<NotificationTable, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userModelId?: string | null;
+  readonly channelModelId?: string | null;
+  readonly firebaseId?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyNotificationTable = {
+  readonly [__modelMeta__]: {
+    identifier: ManagedIdentifier<NotificationTable, 'id'>;
+    readOnlyFields: 'createdAt' | 'updatedAt';
+  };
+  readonly id: string;
+  readonly userModelId?: string | null;
+  readonly channelModelId?: string | null;
+  readonly firebaseId?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type NotificationTable = LazyLoading extends LazyLoadingDisabled ? EagerNotificationTable : LazyNotificationTable
+
+export declare const NotificationTable: (new (init: ModelInit<NotificationTable>) => NotificationTable) & {
+  copyOf(source: NotificationTable, mutator: (draft: MutableModel<NotificationTable>) => MutableModel<NotificationTable> | void): NotificationTable;
+}
+
 type EagerVideoClickHistoryModel = {
   readonly [__modelMeta__]: {
     identifier: ManagedIdentifier<VideoClickHistoryModel, 'id'>;

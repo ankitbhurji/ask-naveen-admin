@@ -11,17 +11,27 @@ import { FiChevronDown } from 'react-icons/fi';
 import { AiFillSetting } from 'react-icons/ai';
 import { FiActivity } from 'react-icons/fi';
 import { RiLogoutCircleFill } from 'react-icons/ri';
+import { useNavigate } from "react-router-dom";
 
 
 
 function Dashboard(props) {
-
+    const navigate = useNavigate();
     const {COMPONENT} = props
     const [check, setCheck] = useState(true)
 
     function openNav(){
         setCheck(!check)
     }
+    function handleLogout(){
+        const confirm = window.confirm("Do you want to logout?")
+        if(!confirm){
+            return
+        }
+        localStorage.removeItem("token");
+        navigate("/login");
+    }
+
     return ( 
         <div className={styles.container}>
             <div className={check?`${styles.sidebarOpen} ${styles.sidebar}`:styles.sidebar}>
@@ -63,6 +73,7 @@ function Dashboard(props) {
                                     <li  className={styles.sidebar_li} id="collapseExample"><a href='/dashboard/video'>Video</a></li>
                                     <li  className={styles.sidebar_li} id="collapseExample"><a href='/dashboard/adminvideo'>Admin Video</a></li>
                                     <li  className={styles.sidebar_li} id="collapseExample"><a href='/dashboard/setting'>Setting</a></li>
+                                    <li  className={styles.sidebar_li} id="collapseExample"><a href='/dashboard/tag'>Tag</a></li>
                                 </div>
                             </ul>
                         </div>
@@ -113,16 +124,16 @@ function Dashboard(props) {
                                         <div className={styles.drop_menu}>
                                             <li className={styles.user_action}>
                                                 <AiFillSetting style={{fontSize:'35px'}}/>
-                                                <a className="dropdown-item" href="#">Setting</a>
+                                                <a className="dropdown-item">Setting</a>
                                             </li>
                                             <li className={styles.user_action}>
                                                 <FiActivity style={{fontSize:'35px'}}/>
-                                                <a className="dropdown-item" href="#">Activity</a>
+                                                <a className="dropdown-item">Activity</a>
                                             </li>
                                             <hr/>
-                                            <li className={styles.user_action}>
+                                            <li onClick={handleLogout} className={styles.user_action}>
                                                 <RiLogoutCircleFill style={{fontSize:'35px'}}/>
-                                                <a className="dropdown-item mb-2" href="#">Logout</a>
+                                                <a className="dropdown-item mb-2">Logout</a>
                                             </li>
                                         </div>
                                     </ul>

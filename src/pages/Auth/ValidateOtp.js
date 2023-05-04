@@ -21,12 +21,14 @@ function ValidateOtp(props) {
             const [getAdmin] = await loginQuries.findAdminUser(email)
             console.log(getAdmin.otp);
             if(getAdmin.otp==otp){
-                alert('your are logedin')
+                // alert('your are logedin')
                 localStorage.setItem('token', JSON.stringify(getAdmin.id));
                 navigate("/dashboard");
-            }else(
-                alert('invalid otp')
-            )
+            }else{
+                alert('Invalid OTP! Please enter valid otp');
+                setOtp('')
+            }
+            
         }
     }
    
@@ -42,7 +44,7 @@ function ValidateOtp(props) {
                                 <div className="small mb-1 text-muted">Enter your otp to login your account.</div>
                                 {adminEmail && <div className="small mb-3 text-success">Otp has been sent on {adminEmail}</div>}
                                 <div className="form-floating mb-3">
-                                    <input onChange={handleInputChange} className="form-control" type="tel" maxLength={6} placeholder="name@example.com" />
+                                    <input onChange={handleInputChange} value={otp || ''} className="form-control" type="tel" maxLength={6} placeholder="name@example.com" />
                                     <label htmlFor="inputEmail">Otp</label>
                                 </div>
                                 <div className="d-flex align-items-center justify-content-between mt-4 mb-0">

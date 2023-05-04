@@ -4,6 +4,7 @@ import { ChannelModel } from '../models';
 import { VideoModel } from '../models';
 import { AdminVideoModel } from '../models';
 import { SettingModel } from '../models';
+import { TagModel } from '../models';
 // import axios from 'axios';
 // import external from '../Config/Config';
 
@@ -11,7 +12,6 @@ import { SettingModel } from '../models';
  
 // Login Quries.
 class LoginQuries{
-
    async findAdminUser(adminEmail){
     const allAdmin = await DataStore.query(UserModel, (user)=>user.and(user=>[
         user.email.eq(adminEmail)
@@ -471,5 +471,13 @@ class SettingQueries{
     }
 }
 
-export  {LoginQuries, Quries, ChannelQuries, VideoQuries, AdminVideoQuries, SettingQueries}
+
+class TagQueries{
+    async findTagModelDataByLimit(){
+        const tagModelData = await DataStore.query(TagModel)
+        return tagModelData
+    }
+}
+
+export  {LoginQuries, Quries, ChannelQuries, VideoQuries, AdminVideoQuries, SettingQueries, TagQueries}
 

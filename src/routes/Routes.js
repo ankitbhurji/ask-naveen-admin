@@ -4,36 +4,30 @@ import { LoginQuries } from "../utils/utils";
 
 const AuthMiddleware = (props) =>{
 
+    const [flag, setFlag] = useState('')
 
     async function validatingAdmin(){
-        let key;
         const getToken = JSON.parse(localStorage.getItem('token'));
         const loginQuries = new LoginQuries
         const validateAdmin = await loginQuries.validatingAdmin(getToken)
-        if(validateAdmin && getToken){
-            if(validateAdmin.id==getToken){
-                key = true
-            }else{
-                key = false
+
+        if(validateAdmin){
+            if(validateAdmin.id==getToken && validateAdmin.userType=="ADMIN"){
+                setFlag(false)
             }
+        }else{
+            setFlag(true)
         }
-        return key
     }
-
-    validatingAdmin().then((value)=>{
-        if(value){
-            console.log(value);
-        }
-    })
+    validatingAdmin()
 
 
-   
-
-    if(false){
+    if(flag){
         return(
             <Navigate to={{pathname:'/login'}} />
         );
     }
+    
 
 
     return(

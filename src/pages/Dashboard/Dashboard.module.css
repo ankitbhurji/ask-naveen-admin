@@ -10,8 +10,8 @@
     top: 0;
     left: 0;
     /* background-color: #111; */
-    /* background-color: #353b48; */
-    background-color: #fff;
+    background-color: #353b48;
+    /* background-color: #fff; */
     overflow-x: hidden;
     transition: 0.2s;
     padding-top: 20px;
@@ -26,7 +26,8 @@
     transition: 0.1s; */
   }
   .sidebar{
-    color: #f1f1f1;
+    /* color: #f1f1f1; */
+    color: white;
   }
   .sidebarOpen{
     width: 250px;
@@ -75,7 +76,8 @@
     margin: 0 auto 0;
     display: flex;
     justify-content: space-between;
-    color: #777777;
+    /* color: #777777; */
+    color: white;
     font-size: 18px;
     width: 100%;
     padding: 10px 20px 0 20px;
@@ -100,7 +102,7 @@
     list-style-type: none;
   }
   .sidebar_ul{
-    background-color:#DBE5FD;
+    /* background-color:#DBE5FD; */
     width: 100%;
   }
   .sidebar_li{

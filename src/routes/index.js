@@ -1,6 +1,7 @@
 import AdminVideoTable from '../components/AdminVideoTable/AdminVideoTable'
 import ChannelTable from '../components/ChannelTable/ChannelTable'
 import SettingTable from '../components/SettingTable.js/SettingTable'
+import TagTable from '../components/TagTable/TagTable'
 import UserTable from "../components/UserTable/UserTable"
 import VideoTable from '../components/VideoTable/VideoTable'
 import SendOtp from "../pages/Auth/SendOtp"
@@ -16,6 +17,7 @@ const authProtectedRoutes = [
     {path:'/dashboard/video', component:<Dashboard COMPONENT={VideoTable}/>},
     {path:'/dashboard/adminvideo', component:<Dashboard COMPONENT={AdminVideoTable}/>},
     {path:'/dashboard/setting', component:<Dashboard COMPONENT={SettingTable}/>},
+    {path:'/dashboard/tag', component:<Dashboard COMPONENT={TagTable}/>},
 ]
 
 const publicRoutes = [
