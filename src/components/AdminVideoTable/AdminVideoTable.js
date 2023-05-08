@@ -13,7 +13,7 @@ function AdminVideoTable() {
     const [adminVideoModelData, setAdminVideoModelData] = useState([{}])
     const [tableSetting, setTableSetting] = useState({
         page:0, 
-        pageLimit:10,
+        pageLimit:10, 
         paginationCount:0,
         adminVideoModelDataLength:0,
         searchFieldInAdminVideoModel:''

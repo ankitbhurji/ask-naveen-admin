@@ -58,7 +58,7 @@ function SettingTable() {
             }
         } 
     }
-    async function handleEditModal(settingModelId){
+    async function handleEditModal(settingModelId){ 
         setIsEditModalOpen(!isEditModalOpen)
         const settingQueries = new SettingQueries
         const settingModelDetails = await settingQueries.settingModelDetails(settingModelId)

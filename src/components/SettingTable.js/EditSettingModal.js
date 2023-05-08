@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import React, { useEffect, useState } from 'react';
 import { SettingQueries } from '../../utils/utils';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -55,7 +55,7 @@ function EditSettingModal(props) {
         <div>
              <Modal show={isEditModalOpen} size=""  onHide={handleEditModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Channel</Modal.Title>
+                    <Modal.Title>Setting</Modal.Title>
                 </Modal.Header>
                 <Modal.Body> 
                     <Form>

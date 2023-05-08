@@ -19,7 +19,7 @@ function EditVideoModal(props) {
         <div> 
            <Modal show={isEditModalOpen} size=""  onHide={handleEditModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Channel</Modal.Title>
+                    <Modal.Title>Video</Modal.Title>
                 </Modal.Header>
                 <Modal.Body> 
                     <Form>

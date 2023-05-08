@@ -55,7 +55,7 @@ function EditAdminVideoModal(props) {
         <div>
              <Modal show={isEditModalOpen} size=""  onHide={handleEditModalClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Channel</Modal.Title>
+                    <Modal.Title>Admin Video</Modal.Title>
                 </Modal.Header>
                 <Modal.Body> 
                     <Form>

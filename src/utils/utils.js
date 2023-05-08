@@ -400,7 +400,7 @@ class AdminVideoQuries{
             const details = await DataStore.query(AdminVideoModel, adminVideoModelId)
             return details
         }
-    }
+    } 
     async updateAdminVideoModelDetails(details){
         const original = await DataStore.query(AdminVideoModel, details.id)
         if(original){
@@ -473,9 +473,76 @@ class SettingQueries{
 
 
 class TagQueries{
-    async findTagModelDataByLimit(){
-        const tagModelData = await DataStore.query(TagModel)
+    async findTagModelDataByLimit(page, pageLimit){
+        const tagModelData = await DataStore.query(TagModel, (data)=>
+        data.status.eq('Y'),
+        {
+            page:page,
+            limit:pageLimit
+        }
+        )
         return tagModelData
+    }
+    async findTagModelDataLength(){
+        const tagModelDataLength = (await DataStore.query(TagModel, (data)=>
+        data.status.eq('Y')
+        )).length
+        return tagModelDataLength
+    }
+    async searchInTagModelData(searchField){
+        const searchedTagModelData = await DataStore.query(TagModel, (data)=>
+        data.and(data=>[
+            data.status.contains('Y'),
+            data.search.contains(searchField)
+        ])
+        )
+        return searchedTagModelData
+    }
+    async addNewTagModelData(addFields){
+        if(addFields){
+            const addNewData = await DataStore.save(
+                new TagModel({
+                    status:'Y',
+                    title:addFields.title,
+                    tags:addFields.tags,
+                    link:addFields.link,
+                    search:(addFields.title + " " + addFields.tags).toLowerCase()
+                })
+                )
+            return addNewData
+        }
+    }
+    async tagModelDetails(tagModelId){
+        if(tagModelId){
+            const details = await DataStore.query(TagModel, tagModelId)
+            return details
+        }
+    }
+    async updateTagModelDetails(updatedDetails){
+        const original = await DataStore.query(TagModel, updatedDetails.id)
+        if(original){
+            const updateDetails = await DataStore.save(
+                TagModel.copyOf(original, update=>{
+                    update.title = updatedDetails.title
+                    update.tags = updatedDetails.tags
+                    update.link = updatedDetails.link
+                    update.search = (updatedDetails.title + " " + updatedDetails.tags).toLowerCase()
+                })
+            );
+            return updateDetails
+        }
+        console.log(updatedDetails);
+    }
+    async deleteTagModelData(tagModelId){
+        const toDelete = await DataStore.query(TagModel, tagModelId)
+        if(toDelete){
+            const deleteModelData = await DataStore.save(
+                TagModel.copyOf(toDelete, update=>{
+                    update.status = 'N'
+                })
+            )
+            return deleteModelData
+        }
     }
 }
 
