@@ -15,7 +15,7 @@ function EditSettingModal(props) {
     const [details, setDetails] = useState({})
 
     // console.log(details);
-    const notify = () => {
+    const notifyUpdate = () => {
         toast.success('Updated successfuly', 
         {
         autoClose:1500,
@@ -41,7 +41,7 @@ function EditSettingModal(props) {
         const settingQueries = new SettingQueries
         const updateDetails = await settingQueries.updateSettingModelDetails(details)
         if(updateDetails){
-            notify()
+            notifyUpdate()
         }
         handleEditModalClose()
     }

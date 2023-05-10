@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useEffect } from 'react';
 import {Quries} from '../../utils/utils';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 function EditUserModal(props) {
 
@@ -18,10 +20,17 @@ function EditUserModal(props) {
     })
     // console.log(userDetailsDateTime);
 
+    const notifyUpdate = () => {
+        toast.success('Updated successfuly', 
+        {
+        autoClose:1500,
+        position:toast.POSITION.TOP_CENTER
+        }
+        )
+    };
     function handleClose(){
         props.handleEdit()
     }
- 
     function handlePage(){
         if(userData){
             setUserDetails(userData)
@@ -37,6 +46,9 @@ function EditUserModal(props) {
         let quries = new Quries
         if(editedUserDetails){
             const updatedUserDetails = await quries.updateUserDetails(editedUserDetails)
+            if(updatedUserDetails){
+                notifyUpdate()
+            }
             handleClose()
         }
     }
@@ -66,7 +78,7 @@ function EditUserModal(props) {
                             UserId
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} type="text" name='id' value={userDetails.id} placeholder="Name" disabled/>
+                                <Form.Control onChange={inputChangedHandler} type="text" name='id' value={userDetails.id || ''} placeholder="Name" disabled/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -74,7 +86,7 @@ function EditUserModal(props) {
                             Name
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} type="text" name='name' value={userDetails.name} placeholder="Name" />
+                                <Form.Control onChange={inputChangedHandler} type="text" name='name' value={userDetails.name || ''} placeholder="Name" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -94,7 +106,7 @@ function EditUserModal(props) {
                             Email
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='email' value={userDetails.email} type="email" placeholder="Email" />
+                                <Form.Control onChange={inputChangedHandler} name='email' value={userDetails.email || ''} type="email" placeholder="Email" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -102,7 +114,7 @@ function EditUserModal(props) {
                             Mobile
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='mobileNumber' value={userDetails.mobileNumber} type="text" placeholder="Mobile" />
+                                <Form.Control onChange={inputChangedHandler} name='mobileNumber' value={userDetails.mobileNumber || ''} type="text" placeholder="Mobile" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -110,7 +122,7 @@ function EditUserModal(props) {
                             City
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='cityName' value={userDetails.cityName} type="text" placeholder="City" />
+                                <Form.Control onChange={inputChangedHandler} name='cityName' value={userDetails.cityName || ''} type="text" placeholder="City" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -118,7 +130,7 @@ function EditUserModal(props) {
                             State
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='stateName' value={userDetails.stateName} type="Text" placeholder="State" />
+                                <Form.Control onChange={inputChangedHandler} name='stateName' value={userDetails.stateName || ''} type="Text" placeholder="State" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -126,7 +138,7 @@ function EditUserModal(props) {
                             Country
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='countryName' value={userDetails.countryName} type="text" placeholder="Country" />
+                                <Form.Control onChange={inputChangedHandler} name='countryName' value={userDetails.countryName || ''} type="text" placeholder="Country" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -134,7 +146,7 @@ function EditUserModal(props) {
                             Position
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='userType' value={userDetails.userType} type="text" placeholder="Position" disabled/>
+                                <Form.Control onChange={inputChangedHandler} name='userType' value={userDetails.userType || ''} type="text" placeholder="Position" disabled/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -142,7 +154,7 @@ function EditUserModal(props) {
                             LastLogin
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='_lastChangedAt' value={userDetails._lastChangedAt} type="text" placeholder="Last Login" disabled/>
+                                <Form.Control onChange={inputChangedHandler} name='_lastChangedAt' value={userDetails._lastChangedAt || ''} type="text" placeholder="Last Login" disabled/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -150,7 +162,7 @@ function EditUserModal(props) {
                             Status
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='status' value={userDetails.status} type="text" placeholder="Status" disabled/>
+                                <Form.Control onChange={inputChangedHandler} name='status' value={userDetails.status || ''} type="text" placeholder="Status" disabled/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -158,7 +170,7 @@ function EditUserModal(props) {
                             Job
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='job' value={userDetails.job} type="text" placeholder="Job" />
+                                <Form.Control onChange={inputChangedHandler} name='job' value={userDetails.job || ''} type="text" placeholder="Job" />
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -166,7 +178,7 @@ function EditUserModal(props) {
                             CreatedAt
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='createdAt' value={userDetailsDateTime.createdAt} type="text" placeholder="Created At" disabled/>
+                                <Form.Control onChange={inputChangedHandler} name='createdAt' value={userDetailsDateTime.createdAt || ''} type="text" placeholder="Created At" disabled/>
                             </Col>
                         </Form.Group>
                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -174,7 +186,7 @@ function EditUserModal(props) {
                             UpdatedAt
                             </Form.Label>
                             <Col sm={10}>
-                                <Form.Control onChange={inputChangedHandler} name='updatedAt' value={userDetailsDateTime.updatedAt} type="text" placeholder="Updated At" disabled/>
+                                <Form.Control onChange={inputChangedHandler} name='updatedAt' value={userDetailsDateTime.updatedAt || ''} type="text" placeholder="Updated At" disabled/>
                             </Col>
                         </Form.Group>
                     </Form>

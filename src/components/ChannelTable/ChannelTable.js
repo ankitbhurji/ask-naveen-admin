@@ -4,6 +4,8 @@ import Pagination from '@material-ui/lab/Pagination';
 import {ChannelQuries}  from '../../utils/utils'
 import { useEffect, useState } from 'react';
 import EditChannelModal from './EditChannelModal'; 
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 
@@ -22,6 +24,14 @@ function ChennelTable() {
     // console.log(pageInfo);
     // console.log(channelData);
 
+    const notifyDelete = () => {
+        toast.error('Deleted successfuly', 
+        {
+        autoClose:1500,
+        position:toast.POSITION.TOP_CENTER
+        }
+        )
+    };
     function handlePageChange(event, newPage){
         setPageInfo({...pageInfo, page:newPage-1})
     }
@@ -54,8 +64,15 @@ function ChennelTable() {
         setChannelDetails(editableChannelDetails)
     }
     async function handleDelete(channelId){
+        const confirmDelete = window.confirm('Do you want to DELETE?')
+        if(!confirmDelete){
+            return
+        }
         const channelQuries = new ChannelQuries
         const deleteChannel = await channelQuries.deleteChannel(channelId)
+        if(deleteChannel){
+            notifyDelete()
+        }
         getChannelData()
 
     }
@@ -153,9 +170,10 @@ function ChennelTable() {
                     </div>
                 </div>
             </div>
-            <button onClick={handleInsert}>insetData</button>
+            {/* <button onClick={handleInsert}>insetData</button> */}
             <EditChannelModal editModal={handleEditModal} isEditModalOpen={isEditModalOpen} channelDetails={channelDetails}/>
         </div>
+        <ToastContainer />
         </div>
      );
 }

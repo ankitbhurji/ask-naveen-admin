@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useEffect, useState } from 'react';
 import { ChannelQuries } from '../../utils/utils';
+import { ToastContainer, toast } from 'react-toastify';
+
 
 
 function EditChannelModal(props) {
@@ -12,6 +14,14 @@ function EditChannelModal(props) {
     const [editableChannelDetails, setEditableChannelChannelDetails] = useState({})
     // console.log(editableChannelDetails);
 
+    const notifyUpdate = () => {
+        toast.success('Updated successfuly', 
+        {
+        autoClose:1500,
+        position:toast.POSITION.TOP_CENTER
+        }
+        )
+    };
     function handleEditModalClose(){
         editModal() 
     }
@@ -31,9 +41,9 @@ function EditChannelModal(props) {
         if(editedChannelDetails){
             const updatedChannelDetails = await channelQuries.updateChannelDetails(editedChannelDetails)
             if(updatedChannelDetails){
-                handleEditModalClose()
-                alert('Channel Details Updated...!')
+                notifyUpdate()
             }
+            handleEditModalClose()
         }
     }
 

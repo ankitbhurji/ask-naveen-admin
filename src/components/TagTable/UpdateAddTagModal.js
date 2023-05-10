@@ -7,11 +7,10 @@ import React, { useEffect, useState } from 'react';
 import { TagQueries } from '../../utils/utils';
 import { ToastContainer, toast } from 'react-toastify';
 import validator from 'validator';
-
+ 
 
 
 function UpdateAddTagModal(props) {
-
 
     const {modalOpenKey,  handleAdd, handleUpdate, tagModelDetails} = props
     const [addDetails, setAddDetails] = useState({
@@ -74,7 +73,7 @@ function UpdateAddTagModal(props) {
                 alert('Enter valid URL')
             }
         }else{
-            alert("Fields can't be enpty")
+            alert("Fields can't be empty")
         }
     }
     function handleDetails(){

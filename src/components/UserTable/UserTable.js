@@ -4,6 +4,7 @@ import { FaTable } from 'react-icons/fa';
 import {Quries} from '../../utils/utils';
 import { useEffect, useState } from 'react';
 import EditUserModal from './EditUserModal';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function UserTable() {
@@ -17,10 +18,18 @@ function UserTable() {
     })
     const [showEditPage, setShowEditPage] = useState(false)
     const [userDetails, setUserDetails] = useState({})
+
+    const notifyDelete = () => {
+        toast.error('Deleted successfuly', 
+        {
+        autoClose:1500,
+        position:toast.POSITION.TOP_CENTER
+        }
+        )
+    };
     function changeTableSize(size){
         setPageInfo({...pageInfo, pageLimit:parseInt(size)})
     } 
-    
     function handleChangePage(event, newPage){
         setPageInfo({...pageInfo, page:newPage-1})
     }
@@ -57,7 +66,14 @@ function UserTable() {
 
     async function handleDelete(id){
         let quries = new Quries
+        const confirmDelete = window.confirm('Do you want to DELETE?')
+        if(!confirmDelete){
+            return
+        }
         const deleteStatus = await quries.deleteUser(id)
+        if(deleteStatus){
+            notifyDelete()
+        }
         getAllUser()
     }
 
@@ -139,8 +155,9 @@ function UserTable() {
                         <Pagination onChange={handleChangePage} count={pageInfo.paginationCount} variant="outlined" shape="rounded" />
                     </div>
                 </div>
-            </div>
             <EditUserModal handleEdit={handleEdit} showEditPage={showEditPage} userData={userDetails}/>
+            </div>
+            <ToastContainer />
         </div>
      );
 }

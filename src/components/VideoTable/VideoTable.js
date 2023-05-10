@@ -5,7 +5,7 @@ import { TiArrowUnsorted } from 'react-icons/ti';
 import {VideoQuries} from '../../utils/utils';
 import { useEffect, useState } from 'react';
 import EditVideoModal from './EditVideoModal';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 
 function VideoTable() {
@@ -28,6 +28,14 @@ function VideoTable() {
     const [videoModelDetails, setVideoModelDetails] = useState([{}])
     // console.log(videoModelDetails);
 
+    const notifyDelete = () => {
+        toast.error('Deleted successfuly', 
+        {
+        autoClose:1500,
+        position:toast.POSITION.TOP_CENTER
+        }
+        )
+    };
     function handlePageLimit(pageSize){
         setTableSetting({...tableSetting, pageLimit:parseInt(pageSize)})
     } 
@@ -62,7 +70,7 @@ function VideoTable() {
 
     function handleSortClick(sortBy){
         if(sortBy==='views'){
-            setToggleSortBy({
+            setToggleSortBy({ 
                 ...toggleSortBy, 
                 toSort:'views',
                 isSortByView:!toggleSortBy.isSortByView,
@@ -97,8 +105,15 @@ function VideoTable() {
     }
 
     async function handleDelete(videoModelDataId){
+        const confirmDelete = window.confirm('Do you want to DELETE?')
+        if(!confirmDelete){
+            return
+        }
         const videoQuries = new VideoQuries
         const deleteVideoModelData = await videoQuries.deleteVideoModelData(videoModelDataId)
+        if(deleteVideoModelData){
+            notifyDelete()
+        }
         getVideoModelData()
 
     }
@@ -107,7 +122,12 @@ function VideoTable() {
         if(tableSetting.searchFieldInVideoModel==''){
             getVideoModelData()
         }
-    },[tableSetting.page, tableSetting.pageLimit, tableSetting.searchFieldInVideoModel, toggleSortBy])
+    },[
+        tableSetting.page, 
+        tableSetting.pageLimit, 
+        tableSetting.searchFieldInVideoModel, 
+        toggleSortBy
+    ])
 
     async function hadleInsertData(){
         const videosQuries = new VideoQuries
@@ -211,9 +231,10 @@ function VideoTable() {
                         <Pagination onChange={handleChangePage} count={tableSetting.paginationCount} variant="outlined" shape="rounded" />
                     </div>
                 </div>
-                <button onClick={hadleInsertData}>addDummyData</button>
-            </div>
+                {/* <button onClick={hadleInsertData}>addDummyData</button> */}
             <EditVideoModal handleEditModal={handleEditModal} isEditModalOpen={isEditModalOpen} videoModelDetails={videoModelDetails}/> 
+            </div>
+            <ToastContainer />
         </div>
      );
 }

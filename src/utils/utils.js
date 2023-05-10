@@ -7,37 +7,39 @@ import { SettingModel } from '../models';
 import { TagModel } from '../models';
 // import axios from 'axios';
 // import external from '../Config/Config';
-
-
  
-// Login Quries.
+//Quries on Login.
 class LoginQuries{
    async findAdminUser(adminEmail){
-    const allAdmin = await DataStore.query(UserModel, (user)=>user.and(user=>[
-        user.email.eq(adminEmail)
-    ]))
-    return allAdmin
+    try{
+        const allAdmin = await DataStore.query(UserModel, (user)=>user.and(user=>[
+            user.email.eq(adminEmail)
+        ]))
+        return allAdmin
+    }catch(err){
+        throw err
+    }
    }
    async updateAdminOtp(user, otp){
-    if(user, otp){
-        try{
-            const updateOtp = await DataStore.save(
-                UserModel.copyOf(user, update=>{
-                    update.otp = +otp
-                })
-            )
-            console.log(user, otp);
-            return updateOtp
-        }catch(err){
-            throw err
-        }
+    try{
+        const updateOtp = await DataStore.save(
+            UserModel.copyOf(user, update=>{
+                update.otp = +otp
+            })
+        )
+        console.log(user, otp);
+        return updateOtp
+    }catch(err){
+        throw err
     }
     // const updateOtp = await DataStore.query(UserModel,)
    }
    async validatingAdmin(token){
-    if(token){
+    try{
         const validateAdmin = await DataStore.query(UserModel, token)
         return validateAdmin
+    }catch(err){
+        throw err
     }
    }
 }
@@ -46,21 +48,27 @@ class LoginQuries{
 // Quries on UserModel.
 class Quries{   
     async findUser(email, userType, userId){
-        const allAdmin  = await DataStore.query(UserModel, (user)=>user.or(user=>[
-            user.email.eq(email),
-            user.id.eq(userId)
-        ]))
-        return allAdmin
+        try{
+            const allAdmin  = await DataStore.query(UserModel, (user)=>user.or(user=>[
+                user.email.eq(email),
+                user.id.eq(userId)
+            ]))
+            return allAdmin
+        }catch(err){
+            throw err
+        }
     }
     async updateUserOtp(users, otp){
-        if(users && otp){
+        try{
             const updateUser = await DataStore.save(
                 UserModel.copyOf(...users, (update)=>{
                     update.otp = +otp
                 })
             )
             return updateUser
-        } 
+        }catch(err){
+            throw err
+        }
     }
     async sendOtpApi(email, otp){
         const payload = {
@@ -75,11 +83,6 @@ class Quries{
         // return postData
     }
     async findUserByLimit(pageLimit, page){
-        // const allUser = await DataStore.query(UserModel, Predicates.ALL, {
-        //     page:page, 
-        //     limit:pageLimit
-        // })
-        // return allUser
         try{
             const allUser = await DataStore.query(UserModel, (data)=>
                 data.status.eq('Y'),
@@ -94,100 +97,119 @@ class Quries{
         }
     }
     async findAllUserDataLength(){
-        const allUserDataLength =(await DataStore.query(UserModel, (data)=>
-        data.status.eq('Y')
-        )).length
-        return allUserDataLength
+        try{
+            const allUserDataLength =(await DataStore.query(UserModel, (data)=>
+            data.status.eq('Y')
+            )).length
+            return allUserDataLength
+        }catch(err){
+            throw err
+        }
     }
     async searchUser(searchField){
-        const searchUser = await DataStore.query(UserModel, (user)=>
-        user.or(user=>[
-            user.name.contains(searchField),
-            user.email.contains(searchField),
-            user.mobileNumber.contains(searchField)
-        ]))
-        return searchUser
+        try{
+            const searchUser = await DataStore.query(UserModel, (user)=>
+            user.or(user=>[
+                user.name.contains(searchField),
+                user.email.contains(searchField),
+                user.mobileNumber.contains(searchField)
+            ]))
+            return searchUser
+        }catch(err){
+            throw err
+        }
     }
     async updateUserDetails(editedUserDetails){
         const original = await DataStore.query(UserModel, editedUserDetails.id);
-        if(original){
-            try{
-                const updateUserDetails = await DataStore.save(
-                    UserModel.copyOf(original, updated => {
-                      updated.name = editedUserDetails.name
-                      updated.gender = editedUserDetails.gender
-                      updated.email = editedUserDetails.email
-                      updated.mobileNumber = editedUserDetails.mobileNumber
-                      updated.cityName = editedUserDetails.cityName
-                      updated.status =editedUserDetails.status
-                      updated.stateName = editedUserDetails.stateName
-                      updated.countryName = editedUserDetails.countryName
-                      updated.userType = editedUserDetails.userType
-                      updated.job = editedUserDetails.job
-                    })
-                  );
-                  return updateUserDetails
-            }catch(error){
-                throw error;
-            }
+        try{
+            const updateUserDetails = await DataStore.save(
+                UserModel.copyOf(original, updated => {
+                  updated.name = editedUserDetails.name
+                  updated.gender = editedUserDetails.gender
+                  updated.email = editedUserDetails.email
+                  updated.mobileNumber = editedUserDetails.mobileNumber
+                  updated.cityName = editedUserDetails.cityName
+                  updated.status =editedUserDetails.status
+                  updated.stateName = editedUserDetails.stateName
+                  updated.countryName = editedUserDetails.countryName
+                  updated.userType = editedUserDetails.userType
+                  updated.job = editedUserDetails.job
+                })
+              );
+              return updateUserDetails
+        }catch(error){
+            throw error;
         }
     }
     async deleteUser(id){
         const toDeleteUser = await DataStore.query(UserModel, id);
-        if(toDeleteUser){
-            try{
-                const deleteUser = await DataStore.save(
-                    UserModel.copyOf(toDeleteUser, update => {
-                        update.status = 'N'
-                    })
-                )
-                return deleteUser
-            }catch(error){
-                console.log(error);
-            }
+        try{
+            const deleteUser = await DataStore.save(
+                UserModel.copyOf(toDeleteUser, update => {
+                    update.status = 'N'
+                })
+            )
+            return deleteUser
+        }catch(err){
+            throw err
         }
     }
-
 }
 
 
 // Quries on Channel Model.
 class ChannelQuries{
     async findChannelByLimit(page, pageLimit){
-        const allChannel = await DataStore.query(ChannelModel, (data)=>
-        data.status.eq('Y'),
-        {
-            page:page,
-            limit:pageLimit
+        try{
+            const allChannel = await DataStore.query(ChannelModel, (data)=>
+            data.status.eq('Y'),
+            {
+                page:page,
+                limit:pageLimit
+            }
+            )
+            return allChannel
+        }catch(err){
+            throw err
         }
-        )
-        return allChannel
     }
     async findAllChannelDataLength(){
-        const channelDataLength = (await DataStore.query(ChannelModel, (data)=>
-        data.status.eq('Y')
-        )).length
-        return channelDataLength
+        try{
+            const channelDataLength = (await DataStore.query(ChannelModel, (data)=>
+            data.status.eq('Y')
+            )).length
+            return channelDataLength
+        }catch(err){
+            throw err
+        }
     }
     async searchChannel(searchField){
-        const searchChannel = await DataStore.query(ChannelModel, (channel)=>
-        channel.or(channel=>[
-            channel.handleName.contains(searchField),
-            channel.email.contains(searchField),
-            channel.channelName.contains(searchField),
-            channel.channelCategory.contains(searchField)
-        ]))
-        return searchChannel
+        try{
+            const searchChannel = await DataStore.query(ChannelModel, (channel)=>
+            channel.and(channel=>[
+                channel.status.contains('Y'),
+                channel.search.contains(searchField)
+                // channel.handleName.contains(searchField),
+                // channel.email.contains(searchField),
+                // channel.channelName.contains(searchField),
+                // channel.channelCategory.contains(searchField)
+            ]))
+            return searchChannel
+        }catch(err){
+            throw err
+        }
     }
-    async channelDetails(channelId){ 
-        if(channelId){
+    async channelDetails(channelId){
+        try{
             const details = await DataStore.query(ChannelModel, channelId)
             return details
+
+        }catch(err){
+            throw err
         }
     }
     async updateChannelDetails(editedChannelDetails){
         const original = await DataStore.query(ChannelModel, editedChannelDetails.id)
-     
         let isChannelMonetize; 
         let isChannelVerified;
         if(editedChannelDetails.isChannelMonetize==='false' || editedChannelDetails.isChannelMonetize===false){
@@ -226,57 +248,55 @@ class ChannelQuries{
     }
     async deleteChannel(channelId){
         const toDeleteChannel = await DataStore.query(ChannelModel, channelId);
-        if(toDeleteChannel){
-            try{
-                const deleteChannel = await DataStore.save(
-                    ChannelModel.copyOf(toDeleteChannel, update => {
-                        update.status = 'N'
-                    })
-                )
-                return deleteChannel
-            }catch(error){
-                console.log(error);
-            }
+        try{
+            const deleteChannel = await DataStore.save(
+                ChannelModel.copyOf(toDeleteChannel, update => {
+                    update.status = 'N'
+                })
+            )
+            return deleteChannel
+        }catch(error){
+            console.log(error);
         }
     }
-    async insertdata(){
-        await DataStore.save(
-            new ChannelModel({
-                ChannleCategory:'xyz',
-                ChannleDiscription: 'fldsakfjasldfj',
-                ChannleId: 'fldsakfjasldfj',
-                ChannleLink: 'fldsakfjasldfj',
-                ChannleName: 'fldsakfjasldfj',
-                ChannleSubCategory: 'fldsakfjasldfj',
-                DailyVideoLimit: 'fldsakfjasldfj',
-                email: 'fldsakfjasldfj',
-                facebookUrl: 'fldsakfjasldfj',
-                HandleName: 'fldsakfjasldfj',
-                InstagramUrl: 'fldsakfjasldfj',
-                IsChannelMonitize: 'fldsakfjasldfj',
-                isChannleVerified: 'fldsakfjasldfj',
-                LastUpdateTime: 'fldsakfjasldfj',
-                LastVideoDateTime: 'fldsakfjasldfj',
-                Level: 'fldsakfjasldfj',
-                membership: 'fldsakfjasldfj',
-                RollNO: '1123446',
-                usermodelID:'11656546544645',
-                totalSubscriber: 'fldsakfjasldfj',
-                totalSubscriberJOin: 'fldsakfjasldfj',
-                TotalVideos: 'fldsakfjasldfj',
-                TotalViews: 'fldsakfjasldfj',
-                UserModelId: 'fldsakfjasldfj',
-                VerifyStatus: 'fldsakfjasldfj',
-                VideoType: 'fldsakfjasldfj',
-                ViralGuessScore: 'fldsakfjasldfj',
-                ViralVideoScore: 'fldsakfjasldfj',
-                LastChangedAt: 'fldsakfjasldfj',
-                Version: 'fldsakfjasldfj',
-                Action: 'fldsakfjasldfj',
-                status:'Y'
-            })
-        )
-    }
+    // async insertdata(){
+    //     await DataStore.save(
+    //         new ChannelModel({
+    //             ChannleCategory:'xyz',
+    //             ChannleDiscription: 'fldsakfjasldfj',
+    //             ChannleId: 'fldsakfjasldfj',
+    //             ChannleLink: 'fldsakfjasldfj',
+    //             ChannleName: 'fldsakfjasldfj',
+    //             ChannleSubCategory: 'fldsakfjasldfj',
+    //             DailyVideoLimit: 'fldsakfjasldfj',
+    //             email: 'fldsakfjasldfj',
+    //             facebookUrl: 'fldsakfjasldfj',
+    //             HandleName: 'fldsakfjasldfj',
+    //             InstagramUrl: 'fldsakfjasldfj',
+    //             IsChannelMonitize: 'fldsakfjasldfj',
+    //             isChannleVerified: 'fldsakfjasldfj',
+    //             LastUpdateTime: 'fldsakfjasldfj',
+    //             LastVideoDateTime: 'fldsakfjasldfj',
+    //             Level: 'fldsakfjasldfj',
+    //             membership: 'fldsakfjasldfj',
+    //             RollNO: '1123446',
+    //             usermodelID:'11656546544645',
+    //             totalSubscriber: 'fldsakfjasldfj',
+    //             totalSubscriberJOin: 'fldsakfjasldfj',
+    //             TotalVideos: 'fldsakfjasldfj',
+    //             TotalViews: 'fldsakfjasldfj',
+    //             UserModelId: 'fldsakfjasldfj',
+    //             VerifyStatus: 'fldsakfjasldfj',
+    //             VideoType: 'fldsakfjasldfj',
+    //             ViralGuessScore: 'fldsakfjasldfj',
+    //             ViralVideoScore: 'fldsakfjasldfj',
+    //             LastChangedAt: 'fldsakfjasldfj',
+    //             Version: 'fldsakfjasldfj',
+    //             Action: 'fldsakfjasldfj',
+    //             status:'Y'
+    //         })
+    //     )
+    // }
 }
 
 
@@ -334,7 +354,8 @@ class VideoQuries{
     }
     async searchInVideoModelData(searchField){
         const searchedVideoModel = await DataStore.query(VideoModel, (user)=>
-        user.or(user=>[
+        user.and(user=>[
+            user.status.contains('Y'),
             user.search.contains(searchField)
         ])
         )
@@ -347,26 +368,34 @@ class VideoQuries{
         }
     }
     async deleteVideoModelData(videoModelDataId){
-        const toDeleteVideoModelData = await DataStore.query(VideoModel, videoModelDataId)
-        DataStore.delete(toDeleteVideoModelData)
+        try{
+            const toDelete = await DataStore.query(VideoModel, videoModelDataId)
+            const deleteModelData = await DataStore.save(
+                VideoModel.copyOf(toDelete, update=>{
+                    update.status = 'N'
+                })
+            )
+            return deleteModelData
+        }catch(err){
+            throw err
+        }
     }
-
-    async insertdata(){
-        await DataStore.save(
-            new VideoModel({
-                videoID:'1000',
-                videoTitle:'kusti championship',
-                videoViews:Math.floor(Math.random() * 90000) + 1000,
-                videoLikeCount:Math.floor(Math.random() * 90000) + 100,
-                ratingCount:Math.floor(Math.random() * 90000) + 10,
-                ratingYes:'yes',
-                ratingNo:'no',
-                channelmodelID:'123456789',
-                videoUrl:'https://youtube.com/shorts/fPRsX3pBgwk?feature=share',
-                status:'Y'
-            })
-        )
-    }
+    // async insertdata(){
+    //     await DataStore.save(
+    //         new VideoModel({
+    //             videoID:'1000',
+    //             videoTitle:'kusti championship',
+    //             videoViews:Math.floor(Math.random() * 90000) + 1000,
+    //             videoLikeCount:Math.floor(Math.random() * 90000) + 100,
+    //             ratingCount:Math.floor(Math.random() * 90000) + 10,
+    //             ratingYes:'yes',
+    //             ratingNo:'no',
+    //             channelmodelID:'123456789',
+    //             videoUrl:'https://youtube.com/shorts/fPRsX3pBgwk?feature=share',
+    //             status:'Y'
+    //         })
+    //     )
+    // }
 }
 
 //Quries on admin video model.
@@ -389,7 +418,8 @@ class AdminVideoQuries{
     }
     async searchInAdminVideoModelData(searchField){
         const searchedAdminVideoModelData = await DataStore.query(AdminVideoModel, (data)=>
-        data.or(data=>[
+        data.and(data=>[
+            data.status.contains('Y'),
             data.search.contains(searchField)
         ])
         )
@@ -444,7 +474,7 @@ class SettingQueries{
     }
     async searchInsettingModelData(searchField){
         const searchSettingModelData = await DataStore.query(SettingModel, (data)=>
-        data.or(data=>[
+        data.and(data=>[
             data.settingKey.contains(searchField)
         ])
         )
@@ -471,7 +501,7 @@ class SettingQueries{
     }
 }
 
-
+// Quries on  Tag Model.
 class TagQueries{
     async findTagModelDataByLimit(page, pageLimit){
         const tagModelData = await DataStore.query(TagModel, (data)=>
@@ -546,5 +576,13 @@ class TagQueries{
     }
 }
 
-export  {LoginQuries, Quries, ChannelQuries, VideoQuries, AdminVideoQuries, SettingQueries, TagQueries}
+export {
+    LoginQuries, 
+    Quries, 
+    ChannelQuries, 
+    VideoQuries, 
+    AdminVideoQuries, 
+    SettingQueries, 
+    TagQueries
+}
 
