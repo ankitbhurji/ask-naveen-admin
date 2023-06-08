@@ -1,0 +1,58 @@
+import express, {Request, Response, response} from "express";
+const adminVideoRouter = express.Router();
+import { adminVideoModel } from "../models/adminVideoModel";
+const avModel = new adminVideoModel()
+
+
+adminVideoRouter.post('/', async(req, res)=>{
+    const tableSetting = req.body
+    try{
+        const adminVideoRes = await avModel.findByLimit(tableSetting)
+        res.status(200).json({"data":adminVideoRes})
+    }catch(err){
+        console.log("error:", err);
+        res.status(400).json({'data': err})
+    }
+})
+adminVideoRouter.get('/length', async(req, res)=>{
+    try{
+        const adminvideoRes = await avModel.findDataLength()
+        res.status(200).send({'length':adminvideoRes})
+    }catch(err){
+        console.log('error:', err);
+        res.status(400).json({"data":err})
+    }
+})
+adminVideoRouter.post('/insertone', async(req:Request, res:Response)=>{
+    const details = req.body
+    try{
+        const adminVideoRes = await avModel.createOne(details)
+        res.status(200).send(`${adminVideoRes}th record created`)   
+    }catch (err) {
+        console.log("error:", err);
+        res.status(400).json({'data':err})
+    }
+})
+adminVideoRouter.put('/delete', async(req:Request, res:Response)=>{
+    try{
+        const id = req.body.id
+        const adminVideoRes = await avModel.delete(id)
+        res.status(200).send(adminVideoRes)
+    }catch(err){
+        console.log("error:", err);
+        res.status(400).json({"data":err})
+    }
+})
+adminVideoRouter.delete('/remove/:id', async(req:Request, res:Response)=>{
+    const {id} = req.params
+    try{
+        const adminVideoRes = await avModel.remove(id)
+        res.status(200).send(adminVideoRes)
+    }catch(err){
+        console.log("error:", err);
+        res.status(400).json({"data":err})
+    }
+})
+
+
+export {adminVideoRouter}

@@ -1,0 +1,27 @@
+{
+    "app":{
+        "port":"9721",
+        "origin":[],
+        "allowOrigin":["Access-Control-Allow-Origin"],
+        "allowedMethod":["GET"],
+        "alloowedHeaders":["platform","content-type"]
+    },
+    "dbDetail":{
+        "dev":{
+            "DB_HOST" : "localhost",
+            "DB_USER" : "root",
+            "DB_PWD" : "",
+            "DB_NAME" : "asknaveen"
+        },
+        "prod":{
+            "DB_HOST" : "10.250.0.18",
+            "DB_USER" : "liclicl",
+            "DB_PWD" : "gererou^5%gfGFt8",
+            "DB_NAME" : "liclic_licdb"
+        }
+    },
+    "tablenames":{
+        "channel":"",
+        "channelHistory":""
+    }
+}
