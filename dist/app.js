@@ -28,14 +28,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const dotenv = __importStar(require("dotenv"));
 const express_1 = __importDefault(require("express"));
-const bodyParser = __importStar(require("body-parser"));
+// import * as bodyParser from "body-parser";
+const body_parser_1 = __importDefault(require("body-parser"));
 const routes_1 = require("./routes/");
 const config_json_1 = __importDefault(require("./config.json"));
+const adminVideoRouter_1 = require("./routes/adminVideoRouter");
+let cors = require("cors");
 const app = (0, express_1.default)();
 dotenv.config();
-app.use(bodyParser.json());
+app.use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.json());
+app.use(cors());
 app.use("/nodeapi/channel", routes_1.channelRouter);
+app.use("/nodeapi/adminvideo", adminVideoRouter_1.adminVideoRouter);
 config_json_1.default;
 app.listen(config_json_1.default.app.port, () => {
-    console.log(`Node server started running on port : ${config_json_1.default.app.port}`);
+    console.log(`app is running at http://${process.env.HOST}:${config_json_1.default.app.port}`);
 });
+// app.listen(config.app.port, () => {
+//     console.log(`Node server started running on port : ${config.app.port}`);
+// });

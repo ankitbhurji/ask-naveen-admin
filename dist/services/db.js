@@ -45,3 +45,10 @@ exports.db = mysql2_1.default.createConnection({
     password: dbDetail.DB_PWD,
     database: dbDetail.DB_NAME
 });
+exports.db.connect(function (err) {
+    if (err)
+        console.log('database not connected');
+    else
+        console.log('connected');
+    // console.log('conected');
+});

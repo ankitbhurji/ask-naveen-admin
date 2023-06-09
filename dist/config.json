@@ -11,7 +11,7 @@
             "DB_HOST": "localhost",
             "DB_USER": "root",
             "DB_PWD": "",
-            "DB_NAME": "test"
+            "DB_NAME": "asknaveen"
         },
         "prod": {
             "DB_HOST": "10.250.0.18",

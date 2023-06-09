@@ -14,9 +14,30 @@ adminVideoRouter.post('/', async(req, res)=>{
         res.status(400).json({'data': err})
     }
 })
-adminVideoRouter.get('/length', async(req, res)=>{
+adminVideoRouter.get('/:id', async(req, res)=>{
+    const {id} = req.params
     try{
-        const adminvideoRes = await avModel.findDataLength()
+        const adminVideoRes = await avModel.findOne(id)
+        res.status(200).json({'data':adminVideoRes})
+    }catch(err){
+        console.log('error:',err);
+        res.status(400).json({'data':err})
+    }
+})
+adminVideoRouter.post('/updateone', async(req, res)=>{
+    const adminVideoDetails = req.body
+    try{
+        const adminVideoRes = await avModel.updateOne(adminVideoDetails)
+        res.status(200).json({'data':adminVideoRes})
+    }catch(err){
+        console.log('error', err);
+        res.status(400).json({"data":err})
+    }
+})
+adminVideoRouter.get('/length/:status', async(req, res)=>{
+    const {status} = req.params
+    try{
+        const adminvideoRes = await avModel.findDataLength(status)
         res.status(200).send({'length':adminvideoRes})
     }catch(err){
         console.log('error:', err);
@@ -33,9 +54,9 @@ adminVideoRouter.post('/insertone', async(req:Request, res:Response)=>{
         res.status(400).json({'data':err})
     }
 })
-adminVideoRouter.put('/delete', async(req:Request, res:Response)=>{
+adminVideoRouter.put('/delete/:id', async(req:Request, res:Response)=>{
+    const {id} = req.params
     try{
-        const id = req.body.id
         const adminVideoRes = await avModel.delete(id)
         res.status(200).send(adminVideoRes)
     }catch(err){
@@ -53,6 +74,15 @@ adminVideoRouter.delete('/remove/:id', async(req:Request, res:Response)=>{
         res.status(400).json({"data":err})
     }
 })
-
+adminVideoRouter.get('/search/:searchField', async(req, res)=>{
+    const {searchField} = req.params
+    try{
+        const adminVideoRes = await avModel.findSearch(searchField)
+        res.status(200).json({"data":adminVideoRes})
+    }catch(err){
+        console.log("error:", err);
+        res.status(400).json({"data":err})
+    }
+})
 
 export {adminVideoRouter}

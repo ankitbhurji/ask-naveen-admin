@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import {channelRouter} from "./routes/";
 import config from './config.json';
 import { adminVideoRouter } from "./routes/adminVideoRouter";
+import { settingRouter } from "./routes/settingRouter";
 let cors = require("cors");
 
 const app = express();
@@ -15,7 +16,8 @@ app.use(cors());
 
 
 app.use("/nodeapi/channel", channelRouter);
-app.use("/nodeapi/adminvideo", adminVideoRouter )
+app.use("/nodeapi/adminvideo", adminVideoRouter)
+app.use('/nodeapi/setting', settingRouter)
 config
 
 

@@ -46,8 +46,20 @@ export class adminVideoModel{
             })
         })
     }
-    findDataLength = () =>{
-        const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status="Y"`
+    findOne = (id:string) => {
+        return new Promise((resolve, reject)=>{
+            db.query(
+                'SELECT * FROM nj_admin_video WHERE id = ?',
+                [id],
+                (err, res)=>{
+                    if(err) reject(err)
+                    resolve(res)
+                }
+            )
+        })
+    }
+    findDataLength = (status:string) =>{
+        const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status='${status}'`
         return new Promise((resolve, reject)=>{
             db.query(sql, (err, res)=>{
                 if(err) reject(err)
@@ -55,7 +67,7 @@ export class adminVideoModel{
             })
         })
     }
-    delete = (id:IAdminVideoDataType):Promise<number> => {
+    delete = (id:string):Promise<number> => {
         const sql = `UPDATE nj_admin_video SET status="N" WHERE id=${id}`
         return new Promise((resolve, reject)=>{
             db.query<OkPacket>(sql, (err, res)=>{
@@ -73,5 +85,50 @@ export class adminVideoModel{
             })
         })
     }
-
+    findSearch = (search:string) => {
+        const sql = `SELECT * FROM nj_admin_video WHERE search LIKE '%${search}%' AND status='Y'`
+        return new Promise((resolve, reject)=>{
+            db.query(sql, (err, res)=>{
+                if(err) reject(err)
+                resolve(res)
+            })
+        })
+        // return new Promise((resolve, reject)=>{
+        //     db.query(
+        //         "SELECT * FROM nj_admin_video WHERE search LIKE  ? AND status='Y'",
+        //         [search],
+        //         (err, res) => {
+        //             if(err) reject(err)
+        //             else resolve(res)
+        //         }
+        //     )
+        // })
+    }
+    updateOne = (details:IAdminVideoDataType):Promise<number | undefined> => {
+        const sql = `UPDATE nj_admin_video SET ? WHERE id = ?`
+        const id = details.id
+        const search = details.videoTitle.toLowerCase()+' '+
+        details.videoTags.toLowerCase()+' '+
+        details.videoCategory.toLowerCase() 
+        // details.videoId.toLowerCase()
+        
+        const params = {
+            videoTitle: details.videoTitle,
+            videoTags:details.videoTags,
+            videoCategory:details.videoCategory,
+            videoDescription:details.videoDescription,
+            videoType:details.videoType,
+            search: search
+        }
+        return new Promise((resolve, reject)=>{
+            db.query<OkPacket>(sql,
+                [params, id],
+                (err, res)=>{
+                    if(err) reject(err)
+                    resolve(res.affectedRows)
+                }
+            )
+        })
+        
+    }
 }
