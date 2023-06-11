@@ -1,5 +1,5 @@
 import { ISettingDataType } from "../interfaces/settingType";
-import { db } from "../services/db";
+import db from "../services/db";
 import { OkPacket, RowDataPacket } from "mysql2";
 
 export class settingModel{
@@ -8,7 +8,7 @@ export class settingModel{
         return new Promise((resolve, reject)=>{
             db.query(
                 `SELECT * FROM nj_setting LIMIT ${+pageLimit} OFFSET ${+pageLimit*+page}`,
-                (err, res)=>{
+                (err: any, res: unknown)=>{
                     if(err) reject(err)
                     resolve(res)
                 }
@@ -21,7 +21,7 @@ export class settingModel{
             db.query(
                 'SELECT * FROM nj_setting WHERE id = ?',
                 [id],
-                (err, res)=>{
+                (err: any, res: unknown)=>{
                     if(err) reject(err)
                     resolve(res)
                 }
@@ -38,9 +38,9 @@ export class settingModel{
             displayName:details.displayName
         }
         return new Promise((resolve, reject)=>{
-            db.query<OkPacket>(sql,
+            db.query(sql,
                 [params, id],
-                (err, res)=>{
+                (err: any, res: { affectedRows: unknown; })=>{
                     if(err) reject(err)
                     resolve(res.affectedRows)
                 }
@@ -52,7 +52,7 @@ export class settingModel{
         return new Promise((resolve, reject)=>{
             db.query(
                 'SELECT COUNT(*) FROM  nj_setting',
-                (err, res)=>{
+                (err: any, res: unknown)=>{
                     if(err) reject(err)
                     resolve(res)
                 }
@@ -63,7 +63,7 @@ export class settingModel{
     findSearch = (search:string) => {
         const sql = `SELECT * FROM nj_setting WHERE settingKey LIKE '%${search}%'`
         return new Promise((resolve, reject)=>{
-            db.query(sql, (err, res)=>{
+            db.query(sql, (err: any, res: unknown)=>{
                 if(err) reject(err)
                 resolve(res)
             })
@@ -75,7 +75,7 @@ export class settingModel{
             db.query(
                 "SELECT * FROM nj_setting WHERE settingKey = ?",
                 [settingkey],
-                (err, res)=>{
+                (err: any, res: unknown)=>{
                     if(err) reject(err)
                     resolve(res)
                 }
