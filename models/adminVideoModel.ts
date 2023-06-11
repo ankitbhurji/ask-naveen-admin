@@ -1,4 +1,4 @@
-import {db} from '../services/db'
+import db from '../services/db'
 import { IAdminVideoType, IAdminVideoDataType } from '../interfaces/adminVideoType'
 import { OkPacket } from 'mysql2'
 
@@ -26,7 +26,7 @@ export class adminVideoModel{
             addDateTime:d.toISOString(),
         }
         return new Promise((resolve, reject)=>{
-            db.query(sql, params, (err, result)=>{
+            db.query(sql, params, (err: any, result: OkPacket)=>{
                 if(err) return reject(err)
                 let insertId = (<OkPacket> result).insertId
                 resolve(insertId)
@@ -40,7 +40,7 @@ export class adminVideoModel{
         const page = tableSetting.page
         const sql = `SELECT * FROM nj_admin_video WHERE status='${status}' LIMIT ${limit} OFFSET ${limit*page}`
         return new Promise((resolve, reject) => {
-            db.query(sql, (err, res)=>{
+            db.query(sql, (err: any, res: unknown)=>{
                 if (err) reject(err)
                 else resolve(res)
             })
@@ -51,7 +51,7 @@ export class adminVideoModel{
             db.query(
                 'SELECT * FROM nj_admin_video WHERE id = ?',
                 [id],
-                (err, res)=>{
+                (err: any, res: unknown)=>{
                     if(err) reject(err)
                     resolve(res)
                 }
@@ -61,7 +61,7 @@ export class adminVideoModel{
     findDataLength = (status:string) =>{
         const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status='${status}'`
         return new Promise((resolve, reject)=>{
-            db.query(sql, (err, res)=>{
+            db.query(sql, (err: any, res: unknown)=>{
                 if(err) reject(err)
                 resolve(res)
             })
@@ -70,7 +70,7 @@ export class adminVideoModel{
     delete = (id:string):Promise<number> => {
         const sql = `UPDATE nj_admin_video SET status="N" WHERE id=${id}`
         return new Promise((resolve, reject)=>{
-            db.query<OkPacket>(sql, (err, res)=>{
+            db.query(sql, (err: any, res: { affectedRows: number | PromiseLike<number>; })=>{
                 if(err) reject(err)
                 resolve(res.affectedRows)
             })
@@ -79,7 +79,7 @@ export class adminVideoModel{
     remove = (id:string):Promise<number> => {
         const sql =  `DELETE FROM nj_admin_video WHERE id=${id} AND status="N"`
         return new Promise((resolve, reject)=>{
-            db.query<OkPacket>(sql, (err, res)=>{
+            db.query(sql, (err: any, res: { affectedRows: number | PromiseLike<number>; })=>{
                 if(err) reject(err)
                 resolve(res.affectedRows)
             })
@@ -88,7 +88,7 @@ export class adminVideoModel{
     findSearch = (search:string) => {
         const sql = `SELECT * FROM nj_admin_video WHERE search LIKE '%${search}%' AND status='Y'`
         return new Promise((resolve, reject)=>{
-            db.query(sql, (err, res)=>{
+            db.query(sql, (err: any, res: unknown)=>{
                 if(err) reject(err)
                 resolve(res)
             })
@@ -121,9 +121,9 @@ export class adminVideoModel{
             search: search
         }
         return new Promise((resolve, reject)=>{
-            db.query<OkPacket>(sql,
+            db.query(sql,
                 [params, id],
-                (err, res)=>{
+                (err: any, res: { affectedRows: number | PromiseLike<number | undefined> | undefined; })=>{
                     if(err) reject(err)
                     resolve(res.affectedRows)
                 }
