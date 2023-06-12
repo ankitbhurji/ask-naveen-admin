@@ -5,9 +5,7 @@ import bodyParser from 'body-parser'
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
-import {channelRouter} from "./routes/";
-import { adminVideoRouter } from "./routes/adminVideoRouter";
-import { settingRouter } from "./routes/settingRouter";
+import {channelRouter,userRouter,adminVideoRouter,settingRouter} from "./routes/";
 import config from './config/index';
 //Middleware
 import { authorize } from "./middlewares/jwtMiddleware";
@@ -24,7 +22,7 @@ app.use(bodyParser.json());
 
 // enabling CORS for all requests
 app.use(cors());
-
+app.set('trust proxy', true)
 // adding morgan to log HTTP requests
 app.use(morgan('combined'));
 
@@ -32,8 +30,7 @@ app.use(morgan('combined'));
 app.use("/nodeapi/channel", channelRouter);
 app.use("/nodeapi/adminvideo", adminVideoRouter)
 app.use('/nodeapi/setting', settingRouter)
-config
-
+app.use('/nodeapi/user', userRouter)
 
 app.listen(config.port, () => {
     console.log(`Node server started running on port : ${config.port}`);
