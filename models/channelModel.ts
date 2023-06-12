@@ -1,6 +1,6 @@
 import db from "../services/db";
 import { OkPacket, RowDataPacket } from "mysql2";
-import{IChannelType,IChannelDataType} from '../interfaces/channelType'
+import{IChannelType,IChannelDataType} from '../interfaces/IChannelType'
 
 export class channelModel{
   create = (channleData:IChannelDataType): Promise<number | undefined>=> {
