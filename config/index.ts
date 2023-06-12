@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
+const prfix="nj_";
 const config = {
     jwt: {
         // The secret is used to sign and validate signatures.
@@ -14,7 +15,7 @@ const config = {
             DB_HOST : "localhost",
             DB_USER : "root",
             DB_PWD : "root",
-            DB_NAME : "quotesra_qrdb"
+            DB_NAME : "liclic_licdb"
         },
         prod:{
             DB_HOST : "10.250.0.18",
@@ -24,8 +25,9 @@ const config = {
         }
     },
     tablenames:{
-        channel:"",
-        channelHistory:""
+        channel:prfix+"channel",
+        channelHistory:prfix+"channel_history",
+        user : prfix+"users"
     }
 };
 

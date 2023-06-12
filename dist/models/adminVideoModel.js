@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.adminVideoModel = void 0;
-const db_1 = require("../services/db");
+const db_1 = __importDefault(require("../services/db"));
 class adminVideoModel {
     constructor() {
         this.createOne = (adminVideoData) => {
@@ -26,7 +29,7 @@ class adminVideoModel {
                 addDateTime: d.toISOString(),
             };
             return new Promise((resolve, reject) => {
-                db_1.db.query(sql, params, (err, result) => {
+                db_1.default.query(sql, params, (err, result) => {
                     if (err)
                         return reject(err);
                     let insertId = result.insertId;
@@ -35,13 +38,12 @@ class adminVideoModel {
             });
         };
         this.findByLimit = (tableSetting) => {
-            console.log(tableSetting);
             const status = tableSetting.tableStatus;
             const limit = tableSetting.pageLimit;
             const page = tableSetting.page;
             const sql = `SELECT * FROM nj_admin_video WHERE status='${status}' LIMIT ${limit} OFFSET ${limit * page}`;
             return new Promise((resolve, reject) => {
-                db_1.db.query(sql, (err, res) => {
+                db_1.default.query(sql, (err, res) => {
                     if (err)
                         reject(err);
                     else
@@ -49,10 +51,19 @@ class adminVideoModel {
                 });
             });
         };
-        this.findDataLength = () => {
-            const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status="Y"`;
+        this.findOne = (id) => {
             return new Promise((resolve, reject) => {
-                db_1.db.query(sql, (err, res) => {
+                db_1.default.query('SELECT * FROM nj_admin_video WHERE id = ?', [id], (err, res) => {
+                    if (err)
+                        reject(err);
+                    resolve(res);
+                });
+            });
+        };
+        this.findDataLength = (status) => {
+            const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status='${status}'`;
+            return new Promise((resolve, reject) => {
+                db_1.default.query(sql, (err, res) => {
                     if (err)
                         reject(err);
                     resolve(res);
@@ -62,7 +73,7 @@ class adminVideoModel {
         this.delete = (id) => {
             const sql = `UPDATE nj_admin_video SET status="N" WHERE id=${id}`;
             return new Promise((resolve, reject) => {
-                db_1.db.query(sql, (err, res) => {
+                db_1.default.query(sql, (err, res) => {
                     if (err)
                         reject(err);
                     resolve(res.affectedRows);
@@ -72,7 +83,50 @@ class adminVideoModel {
         this.remove = (id) => {
             const sql = `DELETE FROM nj_admin_video WHERE id=${id} AND status="N"`;
             return new Promise((resolve, reject) => {
-                db_1.db.query(sql, (err, res) => {
+                db_1.default.query(sql, (err, res) => {
+                    if (err)
+                        reject(err);
+                    resolve(res.affectedRows);
+                });
+            });
+        };
+        this.findSearch = (search) => {
+            const sql = `SELECT * FROM nj_admin_video WHERE search LIKE '%${search}%' AND status='Y'`;
+            return new Promise((resolve, reject) => {
+                db_1.default.query(sql, (err, res) => {
+                    if (err)
+                        reject(err);
+                    resolve(res);
+                });
+            });
+            // return new Promise((resolve, reject)=>{
+            //     db.query(
+            //         "SELECT * FROM nj_admin_video WHERE search LIKE  ? AND status='Y'",
+            //         [search],
+            //         (err, res) => {
+            //             if(err) reject(err)
+            //             else resolve(res)
+            //         }
+            //     )
+            // })
+        };
+        this.updateOne = (details) => {
+            const sql = `UPDATE nj_admin_video SET ? WHERE id = ?`;
+            const id = details.id;
+            const search = details.videoTitle.toLowerCase() + ' ' +
+                details.videoTags.toLowerCase() + ' ' +
+                details.videoCategory.toLowerCase();
+            // details.videoId.toLowerCase()
+            const params = {
+                videoTitle: details.videoTitle,
+                videoTags: details.videoTags,
+                videoCategory: details.videoCategory,
+                videoDescription: details.videoDescription,
+                videoType: details.videoType,
+                search: search
+            };
+            return new Promise((resolve, reject) => {
+                db_1.default.query(sql, [params, id], (err, res) => {
                     if (err)
                         reject(err);
                     resolve(res.affectedRows);

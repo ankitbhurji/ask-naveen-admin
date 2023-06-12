@@ -30,21 +30,27 @@ const dotenv = __importStar(require("dotenv"));
 const express_1 = __importDefault(require("express"));
 // import * as bodyParser from "body-parser";
 const body_parser_1 = __importDefault(require("body-parser"));
+const cors_1 = __importDefault(require("cors"));
+const helmet_1 = __importDefault(require("helmet"));
+const morgan_1 = __importDefault(require("morgan"));
 const routes_1 = require("./routes/");
-const config_json_1 = __importDefault(require("./config.json"));
-const adminVideoRouter_1 = require("./routes/adminVideoRouter");
-let cors = require("cors");
+const index_1 = __importDefault(require("./config/index"));
 const app = (0, express_1.default)();
 dotenv.config();
 app.use(body_parser_1.default.urlencoded({ extended: true }));
 app.use(body_parser_1.default.json());
-app.use(cors());
+// adding Helmet to enhance your Rest API's security
+app.use((0, helmet_1.default)());
+// using bodyParser to parse JSON bodies into JS objects
+app.use(body_parser_1.default.json());
+// enabling CORS for all requests
+app.use((0, cors_1.default)());
+// adding morgan to log HTTP requests
+app.use((0, morgan_1.default)('combined'));
 app.use("/nodeapi/channel", routes_1.channelRouter);
-app.use("/nodeapi/adminvideo", adminVideoRouter_1.adminVideoRouter);
-config_json_1.default;
-app.listen(config_json_1.default.app.port, () => {
-    console.log(`app is running at http://${process.env.HOST}:${config_json_1.default.app.port}`);
+app.use("/nodeapi/adminvideo", routes_1.adminVideoRouter);
+app.use('/nodeapi/setting', routes_1.settingRouter);
+app.use('/nodeapi/user', routes_1.userRouter);
+app.listen(index_1.default.port, () => {
+    console.log(`Node server started running on port : ${index_1.default.port}`);
 });
-// app.listen(config.app.port, () => {
-//     console.log(`Node server started running on port : ${config.app.port}`);
-// });

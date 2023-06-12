@@ -1,7 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.channelModel = void 0;
-const db_1 = require("../services/db");
+const db_1 = __importDefault(require("../services/db"));
 class channelModel {
     constructor() {
         this.create = (channleData) => {
@@ -11,7 +14,7 @@ class channelModel {
                 channelName: channleData.channelName
             };
             return new Promise((resolve, reject) => {
-                db_1.db.query(sql, params, (err, result) => {
+                db_1.default.query(sql, params, (err, result) => {
                     if (err) {
                         return reject(err);
                     }
@@ -22,7 +25,7 @@ class channelModel {
         };
         this.findOne = (channelID) => {
             return new Promise((resolve, reject) => {
-                db_1.db.query("SELECT * FROM nj_channel WHERE channelID = ?", [channelID], (err, res) => {
+                db_1.default.query("SELECT * FROM nj_channel WHERE channelID = ?", [channelID], (err, res) => {
                     if (err)
                         reject(err);
                     else
@@ -32,7 +35,7 @@ class channelModel {
         };
         this.findAll = () => {
             return new Promise((resolve, reject) => {
-                db_1.db.query("SELECT * FROM nj_channel", [], (err, res) => {
+                db_1.default.query("SELECT * FROM nj_channel", [], (err, res) => {
                     if (err)
                         reject(err);
                     else
@@ -43,7 +46,7 @@ class channelModel {
     }
     update(channleData) {
         return new Promise((resolve, reject) => {
-            db_1.db.query("UPDATE nj_channel SET channelName = ?, handle = ? WHERE id = ?", [channleData.channelName, channleData.handle, channleData.channelID], (err, res) => {
+            db_1.default.query("UPDATE nj_channel SET channelName = ?, handle = ? WHERE id = ?", [channleData.channelName, channleData.handle, channleData.channelID], (err, res) => {
                 if (err) {
                     reject(err);
                 }
@@ -55,7 +58,7 @@ class channelModel {
     }
     remove(channelID) {
         return new Promise((resolve, reject) => {
-            db_1.db.query("DELETE FROM nj_channel WHERE id = ?", [channelID], (err, res) => {
+            db_1.default.query("DELETE FROM nj_channel WHERE id = ?", [channelID], (err, res) => {
                 if (err)
                     reject(err);
                 else
