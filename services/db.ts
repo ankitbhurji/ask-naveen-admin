@@ -11,8 +11,10 @@ let dbDetail:{
 };
 if(env === "prod"){
   dbDetail = config.dbDetail.prod;
-}else{
+}else if(env=='dev'){
   dbDetail = config.dbDetail.dev;
+}else{
+  dbDetail = config.dbDetail.local
 }
 let db:any;
 function handleDisconnect(){

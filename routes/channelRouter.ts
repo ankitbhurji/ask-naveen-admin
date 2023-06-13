@@ -1,17 +1,43 @@
-import express, {Request, Response} from "express";
+import express, {Request, Response, response} from "express";
 import {channelModel} from "../models/channelModel";
 const channelRouter = express.Router();
 const chModel = new channelModel();
 
-channelRouter.get("/", async (req: Request, res: Response) => {
-  try{
-    const channelRes = await chModel.findAll();
-    res.status(200).json({"data": channelRes});
-  }catch (error) {
-    console.error('error: ', error);
-    res.status(400).json({"data": error});
-  }
-});
+channelRouter.get('/', async(req:Request, res:Response)=>{
+  const {pageInfo} = req.query
+  const pageInfoJSON = JSON.parse(`${pageInfo}`)
+  const channelRes = await chModel.findByLimit(pageInfoJSON)
+  res.status(200).json({'data':channelRes})
+})
+channelRouter.get('/:id', async(req:Request, res:Response)=>{
+  const {id} = req.params
+  const channelRes = await chModel.findOne(id)
+  res.status(200).json({'data':channelRes})
+})
+channelRouter.post('/updateone', async(req:Request, res:Response)=>{
+  const channelDetails = req.body
+  console.log(channelDetails);
+})
+channelRouter.get('/length/:status', async(req:Request, res:Response)=>{
+  const {status} = req.params
+  const channelRes = await chModel.findDataLength(status)
+  res.status(200).send({'length':channelRes})
+})
+channelRouter.get('/search/:searchField', async(req:Request, res:Response)=>{
+  const {searchField} = req.params
+  const channelRes = await chModel.findSearch(searchField)
+  res.status(200).send({"data": channelRes})
+})
+
+// channelRouter.get("/", async (req: Request, res: Response) => {
+//   try{
+//     const channelRes = await chModel.findAll();
+//     res.status(200).json({"data": channelRes});
+//   }catch (error) {
+//     console.error('error: ', error);
+//     res.status(400).json({"data": error});
+//   }
+// });
 
 // channelRouter.post("/", async (req: Request, res: Response) => {
 //   const newOrder: BasicOrder = req.body;
@@ -24,15 +50,15 @@ channelRouter.get("/", async (req: Request, res: Response) => {
 //   });
 // });
 
-channelRouter.get("/:channel", async (req: Request, res: Response) => {
-  const {channel} = req.params;
-  try{
-    const channelRes = await chModel.findOne(channel);
-    res.status(200).json({"data": channelRes});
-  }catch (error) {
-    console.error('error: ', error);
-    res.status(400).json({"data": error});
-  }
-});
+// channelRouter.get("/:channel", async (req: Request, res: Response) => {
+//   const {channel} = req.params;
+//   try{
+//     const channelRes = await chModel.findOne(channel);
+//     res.status(200).json({"data": channelRes});
+//   }catch (error) {
+//     console.error('error: ', error);
+//     res.status(400).json({"data": error});
+//   }
+// });
 
 export {channelRouter};

@@ -12,6 +12,7 @@ export class adminVideoModel{
         const d = new Date()
         const params = {
             status:'Y',
+            // videoUrl:adminVideoData.videoUrl, // pending
             videoId:adminVideoData.videoId,
             videoTitle:adminVideoData.videoTitle,
             videoCategory:adminVideoData.videoCategory,
@@ -35,6 +36,7 @@ export class adminVideoModel{
     }
 
     findByLimit = (tableSetting:IAdminVideoDataType) =>{
+        console.log(tableSetting);
         const status = tableSetting.tableStatus
         const limit = tableSetting.pageLimit
         const page = tableSetting.page
@@ -59,7 +61,8 @@ export class adminVideoModel{
         })
     }
     findDataLength = (status:string) =>{
-        const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status='${status}'`
+        const sql = `SELECT COUNT(*) FROM nj_admin_video
+         WHERE status='${status}'`
         return new Promise((resolve, reject)=>{
             db.query(sql, (err: any, res: unknown)=>{
                 if(err) reject(err)
@@ -68,7 +71,8 @@ export class adminVideoModel{
         })
     }
     delete = (id:string):Promise<number> => {
-        const sql = `UPDATE nj_admin_video SET status="N" WHERE id=${id}`
+        const sql = `UPDATE nj_admin_video SET status="N" 
+        WHERE id=${id}`
         return new Promise((resolve, reject)=>{
             db.query(sql, (err: any, res: { affectedRows: number | PromiseLike<number>; })=>{
                 if(err) reject(err)
@@ -77,7 +81,8 @@ export class adminVideoModel{
         })
     }
     remove = (id:string):Promise<number> => {
-        const sql =  `DELETE FROM nj_admin_video WHERE id=${id} AND status="N"`
+        const sql =  `DELETE FROM nj_admin_video 
+        WHERE id=${id} AND status="N"`
         return new Promise((resolve, reject)=>{
             db.query(sql, (err: any, res: { affectedRows: number | PromiseLike<number>; })=>{
                 if(err) reject(err)
@@ -86,26 +91,18 @@ export class adminVideoModel{
         })
     }
     findSearch = (search:string) => {
-        const sql = `SELECT * FROM nj_admin_video WHERE search LIKE '%${search}%' AND status='Y'`
+        const sql = `SELECT * FROM nj_admin_video 
+        WHERE search LIKE '%${search}%' AND status='Y'`
         return new Promise((resolve, reject)=>{
             db.query(sql, (err: any, res: unknown)=>{
                 if(err) reject(err)
                 resolve(res)
             })
         })
-        // return new Promise((resolve, reject)=>{
-        //     db.query(
-        //         "SELECT * FROM nj_admin_video WHERE search LIKE  ? AND status='Y'",
-        //         [search],
-        //         (err, res) => {
-        //             if(err) reject(err)
-        //             else resolve(res)
-        //         }
-        //     )
-        // })
     }
     updateOne = (details:IAdminVideoDataType):Promise<number | undefined> => {
-        const sql = `UPDATE nj_admin_video SET ? WHERE id = ?`
+        const sql = `UPDATE nj_admin_video SET ? 
+        WHERE id = ?`
         const id = details.id
         const search = details.videoTitle.toLowerCase()+' '+
         details.videoTags.toLowerCase()+' '+
@@ -122,7 +119,7 @@ export class adminVideoModel{
         }
         return new Promise((resolve, reject)=>{
             db.query(sql,
-                [params, id],
+                [params, id],       
                 (err: any, res: { affectedRows: number | PromiseLike<number | undefined> | undefined; })=>{
                     if(err) reject(err)
                     resolve(res.affectedRows)

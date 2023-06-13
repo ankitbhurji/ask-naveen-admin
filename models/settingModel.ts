@@ -73,7 +73,7 @@ export class settingModel{
     findSettingValue = (settingkey:string) =>{
         return new Promise((resolve, reject)=>{
             db.query(
-                "SELECT * FROM nj_setting WHERE settingKey = ?",
+                "SELECT settingValue FROM nj_setting WHERE settingKey = ?",
                 [settingkey],
                 (err: any, res: unknown)=>{
                     if(err) reject(err)

@@ -31,4 +31,12 @@ export interface IChannelDataType {
   addDateTime?:string,
   status?:string,
   dataJson?:string
+
+  page:number,
+  pageLimit:number,
+  paginationCount:string,
+  totalChannel:number,
+  tableStatus:string,
+  sort:boolean,
+  searchChannnel:string
 }
