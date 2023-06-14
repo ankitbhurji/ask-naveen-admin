@@ -28,14 +28,16 @@ channelRouter.get('/:id', async(req:Request, res:Response)=>{
     res.status(400).json({"data": error});
   }
 })
-channelRouter.post('/updateone', async(req:Request, res:Response)=>{
+channelRouter.put('/updateone', async(req:Request, res:Response)=>{
   try {
     const channelDetails = req.body
     const channelRes = await chModel.updateOne(channelDetails)
+    res.status(200).send(`update ${channelRes} record`)
   } catch (error) {
     console.error('error: ', error);
     res.status(400).json({"data": error});
   }
+  
 })
 channelRouter.get('/length/:status', async(req:Request, res:Response)=>{
   const {status} = req.params

@@ -36,7 +36,8 @@ export class channelModel{
   }
   updateOne = (channelDetails:IChannelDataType) => {
     const sql = `UPDATE nj_channel SET ? WHERE id = ?`
-    // const date = new Date(channelDetails.membershipExpiryDate).toISOString()
+    console.log(channelDetails);
+    // const date_iso = channelDetails.membershipExpiryDate.toISOString()
     const search =  channelDetails.handle?.toLowerCase()+' '+channelDetails.channelName?.toLowerCase()+' '+ channelDetails.rollNumber
     const id = channelDetails.id
 
@@ -44,7 +45,7 @@ export class channelModel{
       rollNumber :channelDetails.rollNumber,
       channelName :channelDetails.channelName,
       handle  :channelDetails.handle,
-      subscribers :channelDetails.subscriber,
+      subscriber :channelDetails.subscriber,
       videos :channelDetails.videos,
       views :channelDetails.views,
       level :channelDetails.level,
@@ -59,7 +60,7 @@ export class channelModel{
       db.query(
         sql,
         [params, id],
-        (err:any, res:{ affectedRows: number | PromiseLike<number | undefined> | undefined; }) => {
+        (err:any, res:any) => {
           if(err) reject(err)
           resolve(res.affectedRows)
         }
