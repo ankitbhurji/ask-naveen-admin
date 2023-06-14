@@ -9,6 +9,7 @@ import {channelRouter,userRouter,adminVideoRouter,settingRouter} from "./routes/
 import config from './config/index';
 //Middleware
 import { authorize } from "./middlewares/jwtMiddleware";
+import { videoRouter } from "./routes/videoRouter";
 
 const app = express();
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(morgan('combined'));
 
 app.use("/nodeapi/channel", channelRouter);
 app.use("/nodeapi/adminvideo", adminVideoRouter)
+app.use('/nodeapi/video', videoRouter)
 app.use('/nodeapi/setting', settingRouter)
 app.use('/nodeapi/user', userRouter)
 

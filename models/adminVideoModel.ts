@@ -40,7 +40,21 @@ export class adminVideoModel{
         const status = tableSetting.tableStatus
         const limit = tableSetting.pageLimit
         const page = tableSetting.page
-        const sql = `SELECT * FROM nj_admin_video WHERE status='${status}' LIMIT ${limit} OFFSET ${limit*page}`
+        const search = tableSetting.searchFieldInAdminVideoModel
+        const videotype = tableSetting.videoType
+
+        let videotypestr =``;
+        let searchstr =``;
+        if(videotype!=""){
+         videotypestr = ` and videoType='${videotype}'`
+         }
+         if(search!=""){
+         searchstr = ` and search like '%${search}%'`
+        }
+        const sql = `SELECT * FROM nj_admin_video 
+        WHERE status='${status}' ${videotypestr} ${searchstr} LIMIT ${limit} OFFSET ${limit*page}`
+        console.log(sql);
+        // const sql = `SELECT * FROM nj_admin_video WHERE status='${status}' '${videotype}'  LIMIT ${limit} OFFSET ${limit*page}`
         return new Promise((resolve, reject) => {
             db.query(sql, (err: any, res: unknown)=>{
                 if (err) reject(err)
