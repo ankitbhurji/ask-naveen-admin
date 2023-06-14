@@ -62,7 +62,7 @@ class settingModel {
         };
         this.findSettingValue = (settingkey) => {
             return new Promise((resolve, reject) => {
-                db_1.default.query("SELECT * FROM nj_setting WHERE settingKey = ?", [settingkey], (err, res) => {
+                db_1.default.query("SELECT settingValue FROM nj_setting WHERE settingKey = ?", [settingkey], (err, res) => {
                     if (err)
                         reject(err);
                     resolve(res);

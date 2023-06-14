@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRequestPutPostSchema = void 0;
+exports.userLoginRequestSchema = exports.userRequestPutPostSchema = void 0;
 exports.userRequestPutPostSchema = {
     $schema: "http://json-schema.org/draft-07/schema#",
     type: "object",
@@ -20,5 +20,15 @@ exports.userRequestPutPostSchema = {
         userScore: { type: "string", nullable: true },
     },
     required: ["name", "email", "mobile"],
+    additionalProperties: false
+};
+exports.userLoginRequestSchema = {
+    $schema: "http://json-schema.org/draft-07/schema#",
+    type: "object",
+    properties: {
+        email: { type: "string", minLength: 1 },
+        otp: { type: "string", minLength: 1 }
+    },
+    required: ["email", "otp"],
     additionalProperties: false
 };

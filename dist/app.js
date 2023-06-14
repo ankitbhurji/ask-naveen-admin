@@ -45,6 +45,7 @@ app.use((0, helmet_1.default)());
 app.use(body_parser_1.default.json());
 // enabling CORS for all requests
 app.use((0, cors_1.default)());
+app.set('trust proxy', true);
 // adding morgan to log HTTP requests
 app.use((0, morgan_1.default)('combined'));
 app.use("/nodeapi/channel", routes_1.channelRouter);

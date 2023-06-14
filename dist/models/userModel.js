@@ -9,24 +9,23 @@ const index_1 = __importDefault(require("../config/index"));
 class userModel {
     constructor() {
         this.create = (userData) => {
-            const { email, name, mobile, city, state, country, job, gender, userType, status, addIpAddress, addDateTime, userScore } = userData;
-            //const userScore=0;
-            //const addDateTime=new Date();
+            const { email, name, mobile, city = '', state = '', country = '', job = '', gender = '', userType = '', status = 'Y', addIpAddress, addDateTime, userScore = '0' } = userData;
             const sql = `INSERT INTO ${index_1.default.tablenames.user} (email,name,mobile,city,state,country,job,gender,userType,status,addIpAddress,addDateTime,userScore) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)`;
             const params = [email, name, mobile, city, state, country, job, gender, userType, status, addIpAddress, addDateTime, userScore];
             return new Promise((resolve, reject) => {
                 db_1.default.query(sql, params, (err, result) => {
                     if (err) {
+                        console.log(err);
                         return reject(err);
                     }
                     let insertId = result.insertId;
-                    resolve(insertId);
+                    return resolve(insertId);
                 });
             });
         };
-        this.login = (userId, otp) => {
+        this.login = (email, otp) => {
             return new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM ${index_1.default.tablenames.user} WHERE id = ? and otp=?`, [userId, otp], (err, res) => {
+                db_1.default.query(`SELECT * FROM ${index_1.default.tablenames.user} WHERE email = ? and otp=?`, [email, otp], (err, res) => {
                     if (err)
                         reject(err);
                     else

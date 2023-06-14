@@ -10,6 +10,7 @@ class ValidationHelper {
     constructor() {
         this._ajv = new ajv_1.default({ useDefaults: true, allErrors: true });
         this._userPostCompiledSchema = this._ajv.compile(userRequestPutPostSchema_1.userRequestPutPostSchema);
+        this._userLoginCompiledSchema = this._ajv.compile(userRequestPutPostSchema_1.userLoginRequestSchema);
     }
     ifSpecialCharExist(str) {
         const pattern = /[\!\@\#\$\%\^\&\*\(\)\+\=\}\{\]\[\\\|\:\;\?\/\>\.\<\~]/;
@@ -17,6 +18,9 @@ class ValidationHelper {
     }
     userPostPutRequest(data, type) {
         return this._validateData(this._userPostCompiledSchema, data, type);
+    }
+    userloginRequest(data, type) {
+        return this._validateData(this._userLoginCompiledSchema, data, type);
     }
     _validateData(validateFunction, data, type) {
         if (validateFunction(data)) {
@@ -27,17 +31,20 @@ class ValidationHelper {
             };
         }
         else {
-            console.log(validateFunction.errors, type);
+            // console.log(validateFunction.errors,type)
             if (!validateFunction.errors) {
                 return {
                     invalid: true,
                     reason: []
                 };
             }
-            const { instancePath, params, message } = validateFunction.errors[0];
             return {
                 invalid: true,
-                reason: [instancePath, params, message]
+                reason: validateFunction.errors.map((err) => ({
+                    instancePath: err.instancePath,
+                    params: err.params,
+                    message: err.message,
+                }))
             };
         }
     }

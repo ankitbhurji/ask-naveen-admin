@@ -47,6 +47,12 @@ const config = {
             DB_USER: "liclicl",
             DB_PWD: "gererou^5%gfGFt8",
             DB_NAME: "liclic_licdb"
+        },
+        local: {
+            DB_HOST: 'localhost',
+            DB_USER: 'root',
+            DB_PWD: '',
+            DB_NAME: 'asknaveen'
         }
     },
     tablenames: {

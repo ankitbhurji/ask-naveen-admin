@@ -22,11 +22,11 @@ export class channelModel{
       }) as IChannelType[];
     })
   }
-  findOne = (channelID:string) => {
+  findOne = (id:number) => {
     return new Promise((resolve, reject)=>{
       db.query(
         'SELECT * FROM nj_channel WHERE id = ?',
-        [channelID],
+        [id],
         (err:any, res:unknown)=>{
           if(err) reject(err)
           resolve(res)
@@ -34,8 +34,37 @@ export class channelModel{
       )
     })
   }
-  updateOne = (channelDetails:string) => {
+  updateOne = (channelDetails:IChannelDataType) => {
+    const sql = `UPDATE nj_channel SET ? WHERE id = ?`
+    // const date = new Date(channelDetails.membershipExpiryDate).toISOString()
+    const search =  channelDetails.handle?.toLowerCase()+' '+channelDetails.channelName?.toLowerCase()+' '+ channelDetails.rollNumber
+    const id = channelDetails.id
 
+    const params = {
+      rollNumber :channelDetails.rollNumber,
+      channelName :channelDetails.channelName,
+      handle  :channelDetails.handle,
+      subscribers :channelDetails.subscriber,
+      videos :channelDetails.videos,
+      views :channelDetails.views,
+      level :channelDetails.level,
+      membership :channelDetails.membership,
+      userID :channelDetails.userID,
+      search :search,
+      isChannelMonetize :channelDetails.isChannelMonetize,
+      isChannelVerified :channelDetails.isChannelVerified,
+      membershipExpiryDate:channelDetails.membershipExpiryDate,
+    }
+    return new Promise((resolve, reject)=>{
+      db.query(
+        sql,
+        [params, id],
+        (err:any, res:{ affectedRows: number | PromiseLike<number | undefined> | undefined; }) => {
+          if(err) reject(err)
+          resolve(res.affectedRows)
+        }
+      )
+    })
   }
   findSearch = (search:string) => {
     const sql = `SELECT * FROM nj_channel 
@@ -88,18 +117,18 @@ export class channelModel{
   //   })
   // }
 
-  // findAll = ():Promise<IChannelType[] | undefined> => {
-  //   return new Promise((resolve, reject) => {
-  //     db.query(
-  //       "SELECT * FROM nj_channel",
-  //       [],
-  //       (err: any, res: IChannelType[] | PromiseLike<IChannelType[] | undefined> | undefined) => {
-  //         if (err) reject(err)
-  //         else resolve(res)
-  //       }
-  //     )as IChannelType[];
-  //   })
-  // }
+  findAll = ():Promise<IChannelType[] | undefined> => {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "SELECT * FROM nj_channel",
+        [],
+        (err: any, res: IChannelType[] | PromiseLike<IChannelType[] | undefined> | undefined) => {
+          if (err) reject(err)
+          else resolve(res)
+        }
+      )as IChannelType[];
+    })
+  }
   // update(channleData: IChannelType): Promise<number | undefined> {
   //   return new Promise((resolve, reject) => {
   //     db.query(

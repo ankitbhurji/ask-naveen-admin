@@ -18,30 +18,55 @@ const channelModel_1 = require("../models/channelModel");
 const channelRouter = express_1.default.Router();
 exports.channelRouter = channelRouter;
 const chModel = new channelModel_1.channelModel();
-channelRouter.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+channelRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const channelRes = yield chModel.findAll();
-        res.status(200).json({ "data": channelRes });
+        const { pageInfo } = req.query;
+        const pageInfoJSON = JSON.parse(`${pageInfo}`);
+        const channelRes = yield chModel.findByLimit(pageInfoJSON);
+        res.status(200).json({ 'data': channelRes });
     }
     catch (error) {
         console.error('error: ', error);
         res.status(400).json({ "data": error });
     }
 }));
-// channelRouter.post("/", async (req: Request, res: Response) => {
-//   const newOrder: BasicOrder = req.body;
-//   orderModel.create(newOrder, (err: Error, orderId: number) => {
-//     if (err) {
-//       return res.status(500).json({"message": err.message});
-//     }
-//     res.status(200).json({"orderId": orderId});
-//   });
-// });
-channelRouter.get("/:channel", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { channel } = req.params;
+channelRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const channelRes = yield chModel.findOne(channel);
-        res.status(200).json({ "data": channelRes });
+        const { id } = req.params;
+        const channelRes = yield chModel.findOne(+id);
+        res.status(200).json({ 'data': channelRes });
+    }
+    catch (error) {
+        console.error('error: ', error);
+        res.status(400).json({ "data": error });
+    }
+}));
+channelRouter.post('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const channelDetails = req.body;
+        console.log(channelDetails);
+    }
+    catch (error) {
+        console.error('error: ', error);
+        res.status(400).json({ "data": error });
+    }
+}));
+channelRouter.get('/length/:status', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { status } = req.params;
+    try {
+        const channelRes = yield chModel.findDataLength(status);
+        res.status(200).send({ 'length': channelRes });
+    }
+    catch (error) {
+        console.error('error: ', error);
+        res.status(400).json({ "data": error });
+    }
+}));
+channelRouter.get('/search/:searchField', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { searchField } = req.params;
+        const channelRes = yield chModel.findSearch(searchField);
+        res.status(200).send({ "data": channelRes });
     }
     catch (error) {
         console.error('error: ', error);

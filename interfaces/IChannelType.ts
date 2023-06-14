@@ -18,10 +18,18 @@ export interface IChannelType extends RowDataPacket {
 }
 
 export interface IChannelDataType {
+  id:number,
   channelID: string,
+  userID:string,
   channelName?: string,
+  rollNumber?:number,
+  level?:number,
   handle?: string,
   subscriber?: number,
+  membership?:string,
+  isChannelVerified?:boolean,
+  isChannelMonetize?:boolean,
+  membershipExpiryDate?:string,
   videos?:number,
   views?:number,
   dailyViews?:number,

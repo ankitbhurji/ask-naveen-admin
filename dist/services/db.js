@@ -35,8 +35,11 @@ let dbDetail;
 if (env === "prod") {
     dbDetail = index_1.default.dbDetail.prod;
 }
-else {
+else if (env == 'dev') {
     dbDetail = index_1.default.dbDetail.dev;
+}
+else {
+    dbDetail = index_1.default.dbDetail.local;
 }
 let db;
 function handleDisconnect() {
