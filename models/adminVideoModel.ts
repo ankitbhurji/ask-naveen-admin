@@ -45,15 +45,22 @@ export class adminVideoModel{
 
         let videotypestr =``;
         let searchstr =``;
-        if(videotype!=""){
-         videotypestr = ` and videoType='${videotype}'`
-         }
+        if(videotype=='' || videotype=='all' || videotype=='select'){
+            videotypestr=``
+        }else{
+            videotypestr = ` and videoType='${videotype}'`
+        }
+        // if(videotype!=""){
+        //  videotypestr = ` and videoType='${videotype}'`
+        // }
+        // if(videotype=='all' || videotype=='select'){
+        //     videotypestr = ``
+        // }
          if(search!=""){
          searchstr = ` and search like '%${search}%'`
         }
         const sql = `SELECT * FROM nj_admin_video 
         WHERE status='${status}' ${videotypestr} ${searchstr} LIMIT ${limit} OFFSET ${limit*page}`
-        console.log(sql);
         // const sql = `SELECT * FROM nj_admin_video WHERE status='${status}' '${videotype}'  LIMIT ${limit} OFFSET ${limit*page}`
         return new Promise((resolve, reject) => {
             db.query(sql, (err: any, res: unknown)=>{

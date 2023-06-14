@@ -35,6 +35,7 @@ const helmet_1 = __importDefault(require("helmet"));
 const morgan_1 = __importDefault(require("morgan"));
 const routes_1 = require("./routes/");
 const index_1 = __importDefault(require("./config/index"));
+const videoRouter_1 = require("./routes/videoRouter");
 const app = (0, express_1.default)();
 dotenv.config();
 app.use(body_parser_1.default.urlencoded({ extended: true }));
@@ -50,6 +51,7 @@ app.set('trust proxy', true);
 app.use((0, morgan_1.default)('combined'));
 app.use("/nodeapi/channel", routes_1.channelRouter);
 app.use("/nodeapi/adminvideo", routes_1.adminVideoRouter);
+app.use('/nodeapi/video', videoRouter_1.videoRouter);
 app.use('/nodeapi/setting', routes_1.settingRouter);
 app.use('/nodeapi/user', routes_1.userRouter);
 app.listen(index_1.default.port, () => {

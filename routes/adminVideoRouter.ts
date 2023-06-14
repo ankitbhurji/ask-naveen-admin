@@ -10,7 +10,6 @@ adminVideoRouter.post('/', async(req, res)=>{
         const adminVideoRes = await avModel.findByLimit(tableSetting)
         res.status(200).json({"data":adminVideoRes})
     }catch(err){
-        console.log("error:", err);
         res.status(400).json({'data': err})
     }
 })

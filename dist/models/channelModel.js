@@ -36,6 +36,34 @@ class channelModel {
             });
         };
         this.updateOne = (channelDetails) => {
+            var _a, _b;
+            const sql = `UPDATE nj_channel SET ? WHERE id = ?`;
+            console.log(channelDetails);
+            // const date_iso = channelDetails.membershipExpiryDate.toISOString()
+            const search = ((_a = channelDetails.handle) === null || _a === void 0 ? void 0 : _a.toLowerCase()) + ' ' + ((_b = channelDetails.channelName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) + ' ' + channelDetails.rollNumber;
+            const id = channelDetails.id;
+            const params = {
+                rollNumber: channelDetails.rollNumber,
+                channelName: channelDetails.channelName,
+                handle: channelDetails.handle,
+                subscriber: channelDetails.subscriber,
+                videos: channelDetails.videos,
+                views: channelDetails.views,
+                level: channelDetails.level,
+                membership: channelDetails.membership,
+                userID: channelDetails.userID,
+                search: search,
+                isChannelMonetize: channelDetails.isChannelMonetize,
+                isChannelVerified: channelDetails.isChannelVerified,
+                membershipExpiryDate: channelDetails.membershipExpiryDate,
+            };
+            return new Promise((resolve, reject) => {
+                db_1.default.query(sql, [params, id], (err, res) => {
+                    if (err)
+                        reject(err);
+                    resolve(res.affectedRows);
+                });
+            });
         };
         this.findSearch = (search) => {
             const sql = `SELECT * FROM nj_channel 
@@ -87,18 +115,16 @@ class channelModel {
         //     ) as IChannelType[];
         //   })
         // }
-        // findAll = ():Promise<IChannelType[] | undefined> => {
-        //   return new Promise((resolve, reject) => {
-        //     db.query(
-        //       "SELECT * FROM nj_channel",
-        //       [],
-        //       (err: any, res: IChannelType[] | PromiseLike<IChannelType[] | undefined> | undefined) => {
-        //         if (err) reject(err)
-        //         else resolve(res)
-        //       }
-        //     )as IChannelType[];
-        //   })
-        // }
+        this.findAll = () => {
+            return new Promise((resolve, reject) => {
+                db_1.default.query("SELECT * FROM nj_channel", [], (err, res) => {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(res);
+                });
+            });
+        };
         // update(channleData: IChannelType): Promise<number | undefined> {
         //   return new Promise((resolve, reject) => {
         //     db.query(

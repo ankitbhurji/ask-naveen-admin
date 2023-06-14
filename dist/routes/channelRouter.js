@@ -19,15 +19,20 @@ const channelRouter = express_1.default.Router();
 exports.channelRouter = channelRouter;
 const chModel = new channelModel_1.channelModel();
 channelRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { pageInfo } = req.query;
-        const pageInfoJSON = JSON.parse(`${pageInfo}`);
-        const channelRes = yield chModel.findByLimit(pageInfoJSON);
-        res.status(200).json({ 'data': channelRes });
+    const { pageInfo } = req.query;
+    if (pageInfo) {
+        try {
+            const pageInfoJSON = JSON.parse(`${pageInfo}`);
+            const channelRes = yield chModel.findByLimit(pageInfoJSON);
+            res.status(200).json({ 'data': channelRes });
+        }
+        catch (error) {
+            console.error('error: ', error);
+            res.status(400).json({ "data": error });
+        }
     }
-    catch (error) {
-        console.error('error: ', error);
-        res.status(400).json({ "data": error });
+    else {
+        res.send('params missing.');
     }
 }));
 channelRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -41,10 +46,11 @@ channelRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(400).json({ "data": error });
     }
 }));
-channelRouter.post('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+channelRouter.put('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const channelDetails = req.body;
-        console.log(channelDetails);
+        const channelRes = yield chModel.updateOne(channelDetails);
+        res.status(200).send(`update ${channelRes} record`);
     }
     catch (error) {
         console.error('error: ', error);
