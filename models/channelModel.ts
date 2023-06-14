@@ -1,7 +1,7 @@
 import db from "../services/db";
 import { OkPacket, RowDataPacket } from "mysql2";
 import{IChannelType,IChannelDataType} from '../interfaces/IChannelType'
-
+ 
 export class channelModel{
 
   findByLimit = (pageInfo:IChannelDataType) =>{
