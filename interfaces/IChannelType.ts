@@ -46,5 +46,5 @@ export interface IChannelDataType {
   totalChannel:number,
   tableStatus:string,
   sort:boolean,
-  searchChannnel:string
+  searchChannel:string
 }

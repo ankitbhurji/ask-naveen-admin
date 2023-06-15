@@ -17,6 +17,7 @@ export interface IAdminVideoDataType {
     publishDateTime:string,
     search:string,
 
+    sortBy:string,
     page:number,
     pageLimit:number,
     paginationCount:number,

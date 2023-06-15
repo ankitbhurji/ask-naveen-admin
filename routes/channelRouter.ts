@@ -37,7 +37,6 @@ channelRouter.put('/updateone', async(req:Request, res:Response)=>{
     console.error('error: ', error);
     res.status(400).json({"data": error});
   }
-  
 })
 channelRouter.get('/length/:status', async(req:Request, res:Response)=>{
   const {status} = req.params
@@ -49,16 +48,16 @@ channelRouter.get('/length/:status', async(req:Request, res:Response)=>{
     res.status(400).json({"data": error});
   }
 })
-channelRouter.get('/search/:searchField', async(req:Request, res:Response)=>{
-  try {
-  const {searchField} = req.params
-    const channelRes = await chModel.findSearch(searchField)
-    res.status(200).send({"data": channelRes})
-  } catch (error) {
-    console.error('error: ', error);
-    res.status(400).json({"data": error});
-  }
-})
+// channelRouter.get('/search/:searchField', async(req:Request, res:Response)=>{
+//   try {
+//   const {searchField} = req.params
+//     const channelRes = await chModel.findSearch(searchField)
+//     res.status(200).send({"data": channelRes})
+//   } catch (error) {
+//     console.error('error: ', error);
+//     res.status(400).json({"data": error});
+//   }
+// })
 
 // channelRouter.get("/", async (req: Request, res: Response) => {
 //   try{
