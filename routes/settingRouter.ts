@@ -7,6 +7,14 @@ settingRouter.get('/', async(req, res)=>{
     // const {page, pagelimit} = req.params
     // const settingRes  = await stModel.findByLimit(page, pagelimit)
     // res.send({'data':settingRes})
+
+    const tableSetting = req.body
+    try{
+        const adminVideoRes = await stModel.findByLimit(tableSetting)
+        res.status(200).json({"data":adminVideoRes})
+    }catch(err){
+        res.status(400).json({'data': err})
+    }
 })
 settingRouter.get('/find/:id', async(req, res)=>{
     const {id} = req.params

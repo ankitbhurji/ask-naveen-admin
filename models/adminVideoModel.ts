@@ -46,16 +46,15 @@ export class adminVideoModel{
         const statusStr = status=='Y'?status: status=='N'?status: 'Y'
         const limitStr = limit ? limit: 10
         const pageStr  = page ? page: 0 
-        const searchStr = search!="" ? ` and search like '%${search}%'` : ``
-        const videoTypeStr = videotype=='' || videotype=='All' || videotype=='--SELECT--' ? ``: ` and videoType='${videotype}'`
-        const orderByStr = orderby=='popular' ?` order by viewsCount desc`: orderby=='lastdayviews'?` order by dailyViews desc`:` order by addDateTime desc`
-
-        const sql = `SELECT * FROM nj_admin_video 
-        WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
+        const searchStr = search!="" ? `and search like '%${search}%'` : ``
+        const videoTypeStr = videotype=='' || videotype=='All' || videotype=='--SELECT--' ? ``: `and videoType='${videotype}'`
+        const orderByStr = orderby=='popular' ?`order by viewsCount desc`: orderby=='lastdayviews'?`order by dailyViews desc`:`order by addDateTime desc`
+        const sql = `SELECT * FROM nj_admin_video WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
+        // console.log(sql);
         return new Promise((resolve, reject) => {
-            db.query(sql, (err: any, res: unknown)=>{
+            db.query(sql, (err: any, res:any)=>{
                 if (err) reject(err)
-                else resolve(res)
+                else resolve(sql)
             })
         })
     }

@@ -4,16 +4,19 @@ import { OkPacket, RowDataPacket } from "mysql2";
 
 export class settingModel{
 
-    findByLimit = (page:string, pageLimit:string) =>{
-        return new Promise((resolve, reject)=>{
-            db.query(
-                `SELECT * FROM nj_setting LIMIT ${+pageLimit} OFFSET ${+pageLimit*+page}`,
-                (err: any, res: unknown)=>{
-                    if(err) reject(err)
-                    resolve(res)
-                }
-            )
-        })
+    findByLimit = (tableSetting:ISettingDataType) =>{
+        const limit = tableSetting.pageLimit
+        const page = tableSetting.page
+        // const search = tableSetting.searchFieldInSettingModel 
+        // return new Promise((resolve, reject)=>{
+        //     db.query(
+        //         `SELECT * FROM nj_setting LIMIT ${+pageLimit} OFFSET ${+pageLimit*+page}`,
+        //         (err: any, res: unknown)=>{
+        //             if(err) reject(err)
+        //             resolve(res)
+        //         }
+        //     )
+        // })
     }
 
     findOne = (id:string) => {
