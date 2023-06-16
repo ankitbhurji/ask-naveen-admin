@@ -50,11 +50,10 @@ export class adminVideoModel{
         const videoTypeStr = videotype=='' || videotype=='All' || videotype=='--SELECT--' ? ``: `and videoType='${videotype}'`
         const orderByStr = orderby=='popular' ?`order by viewsCount desc`: orderby=='lastdayviews'?`order by dailyViews desc`:`order by addDateTime desc`
         const sql = `SELECT * FROM nj_admin_video WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
-        // console.log(sql);
         return new Promise((resolve, reject) => {
             db.query(sql, (err: any, res:any)=>{
                 if (err) reject(err)
-                else resolve(sql)
+                else resolve(res)
             })
         })
     }
@@ -62,7 +61,7 @@ export class adminVideoModel{
         const IDStr = id ? id : 1
         return new Promise((resolve, reject)=>{
             db.query(
-                'SELECT * FROM nj_admin_videos WHERE id = ?',    
+                'SELECT * FROM nj_admin_video WHERE id = ?',    
                 [IDStr],
                 (err: any, res: unknown)=>{
                     if(err) reject(err)

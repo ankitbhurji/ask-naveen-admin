@@ -52,20 +52,19 @@ class adminVideoModel {
             const videoTypeStr = videotype == '' || videotype == 'All' || videotype == '--SELECT--' ? `` : `and videoType='${videotype}'`;
             const orderByStr = orderby == 'popular' ? `order by viewsCount desc` : orderby == 'lastdayviews' ? `order by dailyViews desc` : `order by addDateTime desc`;
             const sql = `SELECT * FROM nj_admin_video WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr * pageStr}`;
-            // console.log(sql);
             return new Promise((resolve, reject) => {
                 db_1.default.query(sql, (err, res) => {
                     if (err)
                         reject(err);
                     else
-                        resolve(sql);
+                        resolve(res);
                 });
             });
         };
         this.findOne = (id) => {
             const IDStr = id ? id : 1;
             return new Promise((resolve, reject) => {
-                db_1.default.query('SELECT * FROM nj_admin_videos WHERE id = ?', [IDStr], (err, res) => {
+                db_1.default.query('SELECT * FROM nj_admin_video WHERE id = ?', [IDStr], (err, res) => {
                     if (err)
                         reject(err);
                     resolve(res);
