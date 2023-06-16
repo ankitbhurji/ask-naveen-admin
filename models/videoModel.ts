@@ -18,8 +18,7 @@ export class videoModel{
         const pageStr = page? page: 0
         const searchStr = search!=''? ` and search like '%${search}%'`: ``
         const orderByStr = orderBy=='ascending'? 'ASC' : orderBy=='descending'? 'DESC': ``
-        const sortByStr = sortBy=='Like'? 'likeCount': sortBy=='Views'? 'viewCount' :sortBy=='Rating'? 'ratingCount': `likeCount`
-
+        const sortByStr = sortBy=='Like'? 'likeCount': sortBy=='Views'? 'viewCount' :sortBy=='Rating'? 'ratingCount': `addDateTime`
 
         const sql = `SELECT * FROM  nj_videos WHERE status='${statusStr}' ${searchStr} ORDER BY ${sortByStr} ${orderByStr} LIMIT ${limitStr}  OFFSET ${limitStr*pageStr}`
         console.log(sql);
@@ -30,5 +29,31 @@ export class videoModel{
             })
         })
     }
-
+    findOne = (id:number) => {
+        return new Promise((resolve, reject)=>{
+          db.query(
+            'SELECT * FROM nj_videos WHERE id = ?',
+            [id],
+            (err:any, res:unknown)=>{
+              if(err) reject(err)
+              resolve(res)
+            }
+          )
+        })
+    }
+    updateOne = (channelDetails:IVideoDataType) => {
+        const sql = `UPDATE nj_channel SET ? WHERE id = ?`
+        //update not created in utils as not needed
+    }
+    findDataLength = (status:string) => {
+        const statusStr = status=='Y'?status: status=='N'?status: 'Y'
+        const sql = `SELECT COUNT(*) FROM nj_videos
+                    WHERE status='${statusStr}'`
+        return new Promise((resolve, reject)=>{
+          db.query(sql, (err:any, res:unknown)=>{
+            if(err) reject(err)
+            resolve(res)
+          })
+        })
+    }
 }

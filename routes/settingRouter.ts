@@ -3,10 +3,10 @@ import { settingModel } from "../models/settingModel";
 const settingRouter = express.Router();
 const stModel = new settingModel()
 
-settingRouter.get('/find/:page/:pagelimit', async(req, res)=>{
-    const {page, pagelimit} = req.params
-    const settingRes  = await stModel.findByLimit(page, pagelimit)
-    res.send({'data':settingRes})
+settingRouter.get('/', async(req, res)=>{
+    // const {page, pagelimit} = req.params
+    // const settingRes  = await stModel.findByLimit(page, pagelimit)
+    // res.send({'data':settingRes})
 })
 settingRouter.get('/find/:id', async(req, res)=>{
     const {id} = req.params

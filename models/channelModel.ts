@@ -8,16 +8,19 @@ export class channelModel{
     const status = pageInfo.tableStatus
     const limit  = pageInfo.pageLimit
     const page = pageInfo.page
-    const sortBy = pageInfo.sort
+    const sortBy = pageInfo.sortBy 
+    const orderBy = pageInfo.orderBy
     const search = pageInfo.searchChannel
-
+    
     const statusStr = status=='Y'?status: status=='N'?status: 'Y'
     const limitStr = limit? limit : 10
     const pageStr = page? page : 0
     const searchStr = search!="" ? ` and search like '%${search}%'` : ``
-    const orderBy = sortBy? 'ASC' : 'DESC'
+    const orderByStr = orderBy=='ascending'? 'ASC': orderBy=='descending'? 'DESC': ''
+    const sortByStr = sortBy=='Roll No'? 'rollNumber': sortBy=='Views'? 'views' : sortBy=='Daily Views'? 'dailyViews': sortBy=='Subscribers'? 'subscriber':'addDateTime'
 
-    const sql = `SELECT * FROM nj_channel WHERE status='${statusStr}' ${searchStr} ORDER BY rollNumber ${orderBy} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
+    const sql = `SELECT * FROM nj_channel WHERE status='${statusStr}' ${searchStr} ORDER BY ${sortByStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
+    console.log(sql);
     return new Promise((resolve, reject)=>{
       db.query(sql, (err:any, result:(IChannelType | PromiseLike<IChannelType | undefined> | undefined)[])=>{
         if(err) return reject(err)

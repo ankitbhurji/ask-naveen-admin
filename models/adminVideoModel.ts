@@ -47,12 +47,11 @@ export class adminVideoModel{
         const limitStr = limit ? limit: 10
         const pageStr  = page ? page: 0 
         const searchStr = search!="" ? ` and search like '%${search}%'` : ``
-        const videoTypeStr = videotype=='' || videotype=='all' || videotype=='select' ? ``: ` and videoType='${videotype}'`
+        const videoTypeStr = videotype=='' || videotype=='All' || videotype=='--SELECT--' ? ``: ` and videoType='${videotype}'`
         const orderByStr = orderby=='popular' ?` order by viewsCount desc`: orderby=='lastdayviews'?` order by dailyViews desc`:` order by addDateTime desc`
 
         const sql = `SELECT * FROM nj_admin_video 
-                    WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
-        // const sql = `SELECT * FROM nj_admin_video WHERE status='${status}' '${videotype}'  LIMIT ${limit} OFFSET ${limit*page}`
+        WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
         return new Promise((resolve, reject) => {
             db.query(sql, (err: any, res: unknown)=>{
                 if (err) reject(err)
@@ -64,7 +63,7 @@ export class adminVideoModel{
         const IDStr = id ? id : 1
         return new Promise((resolve, reject)=>{
             db.query(
-                'SELECT * FROM nj_admin_video WHERE id = ?',
+                'SELECT * FROM nj_admin_video WHERE id = ?',    
                 [IDStr],
                 (err: any, res: unknown)=>{
                     if(err) reject(err)

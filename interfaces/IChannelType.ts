@@ -2,7 +2,7 @@ import { RowDataPacket } from "mysql2"
 
 export interface IChannelType extends RowDataPacket {
   id:number
-  channelID: string,
+  channelID: string, 
   channelName: string,
   handle: string,
   subscriber: number,
@@ -45,6 +45,7 @@ export interface IChannelDataType {
   paginationCount:string,
   totalChannel:number,
   tableStatus:string,
-  sort:boolean,
+  sortBy:string,
+  orderBy:string,
   searchChannel:string
 }
