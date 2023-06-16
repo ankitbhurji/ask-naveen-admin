@@ -25,7 +25,6 @@ adminVideoRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, funct
         res.status(200).json({ "data": adminVideoRes });
     }
     catch (err) {
-        console.log("error:", err);
         res.status(400).json({ 'data': err });
     }
 }));
@@ -61,6 +60,14 @@ adminVideoRouter.get('/length/:status', (req, res) => __awaiter(void 0, void 0, 
         console.log('error:', err);
         res.status(400).json({ "data": err });
     }
+    // const {tableSetting} = req.query 
+    // const tableSettingJSON = JSON.parse(`${tableSetting}`)
+    // try{
+    //     const adminVideoRes = await avModel.findDataLength(tableSettingJSON)
+    //     res.status(200).send({'length':adminVideoRes})
+    // }catch(err){
+    //     console.log(err);
+    // }
 }));
 adminVideoRouter.post('/insertone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const details = req.body;
@@ -89,17 +96,6 @@ adminVideoRouter.delete('/remove/:id', (req, res) => __awaiter(void 0, void 0, v
     try {
         const adminVideoRes = yield avModel.remove(id);
         res.status(200).send(adminVideoRes);
-    }
-    catch (err) {
-        console.log("error:", err);
-        res.status(400).json({ "data": err });
-    }
-}));
-adminVideoRouter.get('/search/:searchField', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { searchField } = req.params;
-    try {
-        const adminVideoRes = yield avModel.findSearch(searchField);
-        res.status(200).json({ "data": adminVideoRes });
     }
     catch (err) {
         console.log("error:", err);

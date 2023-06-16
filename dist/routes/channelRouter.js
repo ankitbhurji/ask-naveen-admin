@@ -68,14 +68,3 @@ channelRouter.get('/length/:status', (req, res) => __awaiter(void 0, void 0, voi
         res.status(400).json({ "data": error });
     }
 }));
-channelRouter.get('/search/:searchField', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { searchField } = req.params;
-        const channelRes = yield chModel.findSearch(searchField);
-        res.status(200).send({ "data": channelRes });
-    }
-    catch (error) {
-        console.error('error: ', error);
-        res.status(400).json({ "data": error });
-    }
-}));

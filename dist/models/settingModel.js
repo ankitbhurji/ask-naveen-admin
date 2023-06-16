@@ -7,14 +7,19 @@ exports.settingModel = void 0;
 const db_1 = __importDefault(require("../services/db"));
 class settingModel {
     constructor() {
-        this.findByLimit = (page, pageLimit) => {
-            return new Promise((resolve, reject) => {
-                db_1.default.query(`SELECT * FROM nj_setting LIMIT ${+pageLimit} OFFSET ${+pageLimit * +page}`, (err, res) => {
-                    if (err)
-                        reject(err);
-                    resolve(res);
-                });
-            });
+        this.findByLimit = (tableSetting) => {
+            const limit = tableSetting.pageLimit;
+            const page = tableSetting.page;
+            // const search = tableSetting.searchFieldInSettingModel 
+            // return new Promise((resolve, reject)=>{
+            //     db.query(
+            //         `SELECT * FROM nj_setting LIMIT ${+pageLimit} OFFSET ${+pageLimit*+page}`,
+            //         (err: any, res: unknown)=>{
+            //             if(err) reject(err)
+            //             resolve(res)
+            //         }
+            //     )
+            // })
         };
         this.findOne = (id) => {
             return new Promise((resolve, reject) => {

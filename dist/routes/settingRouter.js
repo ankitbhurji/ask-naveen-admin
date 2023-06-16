@@ -18,10 +18,18 @@ const settingModel_1 = require("../models/settingModel");
 const settingRouter = express_1.default.Router();
 exports.settingRouter = settingRouter;
 const stModel = new settingModel_1.settingModel();
-settingRouter.get('/find/:page/:pagelimit', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { page, pagelimit } = req.params;
-    const settingRes = yield stModel.findByLimit(page, pagelimit);
-    res.send({ 'data': settingRes });
+settingRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    // const {page, pagelimit} = req.params
+    // const settingRes  = await stModel.findByLimit(page, pagelimit)
+    // res.send({'data':settingRes})
+    const tableSetting = req.body;
+    try {
+        const adminVideoRes = yield stModel.findByLimit(tableSetting);
+        res.status(200).json({ "data": adminVideoRes });
+    }
+    catch (err) {
+        res.status(400).json({ 'data': err });
+    }
 }));
 settingRouter.get('/find/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

@@ -11,13 +11,17 @@ class channelModel {
             const status = pageInfo.tableStatus;
             const limit = pageInfo.pageLimit;
             const page = pageInfo.page;
-            const sortBy = pageInfo.sort;
-            let order = 'DESC';
-            if (sortBy) {
-                order = 'ASC';
-            }
-            const sql = `SELECT * FROM nj_channel 
-    WHERE status='${status}' ORDER BY rollNumber ${order} LIMIT ${limit} OFFSET ${limit * page}`;
+            const sortBy = pageInfo.sortBy;
+            const orderBy = pageInfo.orderBy;
+            const search = pageInfo.searchChannel;
+            const statusStr = status == 'Y' ? status : status == 'N' ? status : 'Y';
+            const limitStr = limit ? limit : 10;
+            const pageStr = page ? page : 0;
+            const searchStr = search != "" ? ` and search like '%${search}%'` : ``;
+            const orderByStr = orderBy == 'ascending' ? 'ASC' : orderBy == 'descending' ? 'DESC' : '';
+            const sortByStr = sortBy == 'Roll No' ? 'rollNumber' : sortBy == 'Views' ? 'views' : sortBy == 'Daily Views' ? 'dailyViews' : sortBy == 'Subscribers' ? 'subscriber' : 'addDateTime';
+            const sql = `SELECT * FROM nj_channel WHERE status='${statusStr}' ${searchStr} ORDER BY ${sortByStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr * pageStr}`;
+            console.log(sql);
             return new Promise((resolve, reject) => {
                 db_1.default.query(sql, (err, result) => {
                     if (err)
@@ -38,7 +42,6 @@ class channelModel {
         this.updateOne = (channelDetails) => {
             var _a, _b;
             const sql = `UPDATE nj_channel SET ? WHERE id = ?`;
-            console.log(channelDetails);
             // const date_iso = channelDetails.membershipExpiryDate.toISOString()
             const search = ((_a = channelDetails.handle) === null || _a === void 0 ? void 0 : _a.toLowerCase()) + ' ' + ((_b = channelDetails.channelName) === null || _b === void 0 ? void 0 : _b.toLowerCase()) + ' ' + channelDetails.rollNumber;
             const id = channelDetails.id;
@@ -65,20 +68,20 @@ class channelModel {
                 });
             });
         };
-        this.findSearch = (search) => {
-            const sql = `SELECT * FROM nj_channel 
-    WHERE search LIKE '%${search}%' AND status='Y'`;
-            return new Promise((resolve, reject) => {
-                db_1.default.query(sql, (err, res) => {
-                    if (err)
-                        reject(err);
-                    resolve(res);
-                });
-            });
-        };
+        // findSearch = (search:string) => {
+        //   const sql = `SELECT * FROM nj_channel 
+        //   WHERE search LIKE '%${search}%' AND status='Y'`
+        //   return new Promise((resolve, reject)=>{
+        //     db.query(sql, (err:any, res:unknown)=>{
+        //       if(err) reject(err)
+        //       resolve(res)
+        //     })
+        //   })
+        // }
         this.findDataLength = (status) => {
+            const statusStr = status == 'Y' ? status : status == 'N' ? status : 'Y';
             const sql = `SELECT COUNT(*) FROM nj_channel
-    WHERE status='${status}'`;
+                WHERE status='${statusStr}'`;
             return new Promise((resolve, reject) => {
                 db_1.default.query(sql, (err, res) => {
                     if (err)
@@ -115,16 +118,18 @@ class channelModel {
         //     ) as IChannelType[];
         //   })
         // }
-        this.findAll = () => {
-            return new Promise((resolve, reject) => {
-                db_1.default.query("SELECT * FROM nj_channel", [], (err, res) => {
-                    if (err)
-                        reject(err);
-                    else
-                        resolve(res);
-                });
-            });
-        };
+        // findAll = ():Promise<IChannelType[] | undefined> => {
+        //   return new Promise((resolve, reject) => {
+        //     db.query(
+        //       "SELECT * FROM nj_channel",
+        //       [],
+        //       (err: any, res: IChannelType[] | PromiseLike<IChannelType[] | undefined> | undefined) => {
+        //         if (err) reject(err)
+        //         else resolve(res)
+        //       }
+        //     )as IChannelType[];
+        //   })
+        // }
         // update(channleData: IChannelType): Promise<number | undefined> {
         //   return new Promise((resolve, reject) => {
         //     db.query(

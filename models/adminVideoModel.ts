@@ -62,7 +62,7 @@ export class adminVideoModel{
         const IDStr = id ? id : 1
         return new Promise((resolve, reject)=>{
             db.query(
-                'SELECT * FROM nj_admin_video WHERE id = ?',    
+                'SELECT * FROM nj_admin_videos WHERE id = ?',    
                 [IDStr],
                 (err: any, res: unknown)=>{
                     if(err) reject(err)
