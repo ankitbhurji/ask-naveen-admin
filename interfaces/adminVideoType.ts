@@ -23,7 +23,6 @@ export interface IAdminVideoDataType {
     paginationCount:number,
     adminVideoModelDataLength:0,
     tableStatus:string,
-    searchFieldInAdminVideoModel:string
 
     id?:number,
 }

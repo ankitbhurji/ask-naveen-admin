@@ -38,15 +38,15 @@ export class adminVideoModel{
     findByLimit = (tableSetting:IAdminVideoDataType) =>{
         const status = tableSetting.tableStatus
         const limit = tableSetting.pageLimit
-        const page = tableSetting.page
-        const search = tableSetting.search
+        const pages = tableSetting.page
+        const searched = tableSetting.search
         const videotype = tableSetting.videoType
         const orderby = tableSetting.sortBy
         
         const statusStr = status=='Y'?status: status=='N'?status: 'Y'
         const limitStr = limit ? limit: 10
-        const pageStr  = page ? page: 0 
-        const searchStr = search!="" ? `and search like '%${search}%'` : ``
+        const pageStr  = pages ? pages: 0 
+        const searchStr = searched!="" ? `and search like '%${searched}%'` : ``
         const videoTypeStr = videotype=='' || videotype=='All' || videotype=='--SELECT--' ? ``: `and videoType='${videotype}'`
         const orderByStr = orderby=='popular' ?`order by viewsCount desc`: orderby=='lastdayviews'?`order by dailyViews desc`:`order by addDateTime desc`
         const sql = `SELECT * FROM nj_admin_video WHERE status= '${statusStr}' ${videoTypeStr} ${searchStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
