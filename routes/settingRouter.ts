@@ -47,7 +47,7 @@ settingRouter.get('/settingvalue/:settingkey', async(req, res)=>{
     try {
         const {settingkey}  = req.params
         const settingRes = await stModel.findSettingValue(settingkey)
-        res.send({data:settingRes})
+        res.send(settingRes)
     } catch (err) {
         console.log('error:',err);
         res.status(400).json({'data': err})

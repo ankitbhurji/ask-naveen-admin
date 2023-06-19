@@ -41,11 +41,11 @@ videoRouter.put('/updateone', async(req:Request, res:Response)=>{
   })
 
 videoRouter.get('/length/:status', async(req:Request, res:Response)=>{
-    const {status} = req.params
-    try {
-      const videoRes = await vModel.findDataLength(status)
+  try{
+      const {status} = req.params
+      const videoRes = await vModel.findDataLength(status) 
       res.status(200).send({'length':videoRes})
-    } catch (error) {
+    }catch(error){
       console.error('error: ', error);
       res.status(400).json({"data": error});
     }

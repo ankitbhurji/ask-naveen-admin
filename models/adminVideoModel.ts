@@ -72,9 +72,7 @@ export class adminVideoModel{
     }
     findDataLength = (status:string) =>{
         const statusStr = status=='Y'?status: status=='N'?status: 'Y'
-        const sql = `SELECT COUNT(*) FROM nj_admin_video
-                    WHERE status='${statusStr}'`
-        console.log(sql);
+        const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status='${statusStr}'`
         return new Promise((resolve, reject)=>{
             db.query(sql, (err: any, res: unknown)=>{
                 if(err) reject(err)
@@ -116,8 +114,7 @@ export class adminVideoModel{
     //     })
     // }
     updateOne = (details:IAdminVideoDataType):Promise<number | undefined> => {
-        const sql = `UPDATE nj_admin_video SET ? 
-                    WHERE id = ?`
+        const sql = `UPDATE nj_admin_video SET ? WHERE id = ?`
         const id = details.id
         const search = details.videoTitle.toLowerCase()+' '+
         details.videoTags.toLowerCase()+' '+

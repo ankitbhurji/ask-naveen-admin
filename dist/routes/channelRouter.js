@@ -46,7 +46,7 @@ channelRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, functi
         res.status(400).json({ "data": error });
     }
 }));
-channelRouter.put('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+channelRouter.post('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const channelDetails = req.body;
         const channelRes = yield chModel.updateOne(channelDetails);

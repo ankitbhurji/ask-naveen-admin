@@ -7,7 +7,7 @@ import { ValidationHelper } from "../helpers/validationHelper";
 import moment from 'moment';
 const userRouter = express.Router();
 const userModelObj = new userModel();
-const vh = ValidationHelper.singleton;
+const vh = ValidationHelper.singleton; 
 
 // userRouter.get("/", async (req: Request, res: Response) => {
 //   try{

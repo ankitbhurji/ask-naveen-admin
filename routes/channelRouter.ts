@@ -1,7 +1,7 @@
 import express, {Request, Response, response} from "express";
 import {channelModel} from "../models/channelModel";
 const channelRouter = express.Router();
-const chModel = new channelModel();
+const chModel = new channelModel(); 
 
 channelRouter.get('/', async(req:Request, res:Response)=>{
   const {pageInfo} = req.query
@@ -28,7 +28,7 @@ channelRouter.get('/:id', async(req:Request, res:Response)=>{
     res.status(400).json({"data": error});
   }
 })
-channelRouter.put('/updateone', async(req:Request, res:Response)=>{
+channelRouter.post('/updateone', async(req:Request, res:Response)=>{
   try {
     const channelDetails = req.body
     const channelRes = await chModel.updateOne(channelDetails)

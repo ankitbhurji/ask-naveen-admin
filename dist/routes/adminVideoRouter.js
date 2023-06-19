@@ -18,19 +18,41 @@ const adminVideoRouter = express_1.default.Router();
 exports.adminVideoRouter = adminVideoRouter;
 const adminVideoModel_1 = require("../models/adminVideoModel");
 const avModel = new adminVideoModel_1.adminVideoModel();
-adminVideoRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const tableSetting = req.body;
+adminVideoRouter.post('/insertone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const details = req.body;
     try {
-        const adminVideoRes = yield avModel.findByLimit(tableSetting);
-        res.status(200).json({ "data": adminVideoRes });
+        const adminVideoRes = yield avModel.createOne(details);
+        res.status(200).send(`${adminVideoRes}th record created`);
     }
     catch (err) {
+        console.log("error:", err);
         res.status(400).json({ 'data': err });
     }
 }));
+adminVideoRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { tableSetting } = req.query;
+    if (tableSetting) {
+        try {
+            const pageInfoJSON = JSON.parse(`${tableSetting}`);
+            const adminVideoRes = yield avModel.findByLimit(pageInfoJSON);
+            res.status(200).json({ 'data': adminVideoRes });
+        }
+        catch (error) {
+            console.error('error: ', error);
+            res.status(400).json({ "data": error });
+        }
+    }
+    // const tableSetting = req.body
+    // try{
+    //     const adminVideoRes = await avModel.findByLimit(tableSetting)
+    //     res.status(200).json({"data":adminVideoRes})
+    // }catch(err){
+    //     res.status(400).json({'data': err})
+    // }
+}));
 adminVideoRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
     try {
+        const { id } = req.params;
         const adminVideoRes = yield avModel.findOne(id);
         res.status(200).json({ 'data': adminVideoRes });
     }
@@ -68,17 +90,6 @@ adminVideoRouter.get('/length/:status', (req, res) => __awaiter(void 0, void 0, 
     // }catch(err){
     //     console.log(err);
     // }
-}));
-adminVideoRouter.post('/insertone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const details = req.body;
-    try {
-        const adminVideoRes = yield avModel.createOne(details);
-        res.status(200).send(`${adminVideoRes}th record created`);
-    }
-    catch (err) {
-        console.log("error:", err);
-        res.status(400).json({ 'data': err });
-    }
 }));
 adminVideoRouter.put('/delete/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { id } = req.params;

@@ -66,7 +66,7 @@ settingRouter.get('/settingvalue/:settingkey', (req, res) => __awaiter(void 0, v
     try {
         const { settingkey } = req.params;
         const settingRes = yield stModel.findSettingValue(settingkey);
-        res.send({ data: settingRes });
+        res.send(settingRes);
     }
     catch (err) {
         console.log('error:', err);

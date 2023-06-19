@@ -4,18 +4,39 @@ import { adminVideoModel } from "../models/adminVideoModel";
 const avModel = new adminVideoModel()
 
 
-adminVideoRouter.post('/', async(req, res)=>{
-    const tableSetting = req.body
+adminVideoRouter.post('/insertone', async(req:Request, res:Response)=>{
+    const details = req.body
     try{
-        const adminVideoRes = await avModel.findByLimit(tableSetting)
-        res.status(200).json({"data":adminVideoRes})
-    }catch(err){
-        res.status(400).json({'data': err})
+        const adminVideoRes = await avModel.createOne(details)
+        res.status(200).send(`${adminVideoRes}th record created`)   
+    }catch (err) {
+        console.log("error:", err);
+        res.status(400).json({'data':err})
     }
 })
+adminVideoRouter.get('/', async(req, res)=>{ 
+    const {tableSetting} = req.query
+    if(tableSetting){
+        try {
+            const pageInfoJSON = JSON.parse(`${tableSetting}`)
+            const adminVideoRes = await avModel.findByLimit(pageInfoJSON)
+            res.status(200).json({'data':adminVideoRes})
+        }catch (error) {
+            console.error('error: ', error);
+            res.status(400).json({"data": error});
+        }
+    }
+    // const tableSetting = req.body
+    // try{
+    //     const adminVideoRes = await avModel.findByLimit(tableSetting)
+    //     res.status(200).json({"data":adminVideoRes})
+    // }catch(err){
+    //     res.status(400).json({'data': err})
+    // }
+})
 adminVideoRouter.get('/:id', async(req, res)=>{
-    const {id} = req.params
     try{
+        const {id} = req.params
         const adminVideoRes = await avModel.findOne(id)
         res.status(200).json({'data':adminVideoRes})
     }catch(err){
@@ -51,16 +72,6 @@ adminVideoRouter.get('/length/:status', async(req, res)=>{
     // }catch(err){
     //     console.log(err);
     // }
-})
-adminVideoRouter.post('/insertone', async(req:Request, res:Response)=>{
-    const details = req.body
-    try{
-        const adminVideoRes = await avModel.createOne(details)
-        res.status(200).send(`${adminVideoRes}th record created`)   
-    }catch (err) {
-        console.log("error:", err);
-        res.status(400).json({'data':err})
-    }
 })
 adminVideoRouter.put('/delete/:id', async(req:Request, res:Response)=>{
     const {id} = req.params

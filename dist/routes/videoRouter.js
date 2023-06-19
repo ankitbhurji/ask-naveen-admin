@@ -55,8 +55,8 @@ videoRouter.put('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, fu
     }
 }));
 videoRouter.get('/length/:status', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { status } = req.params;
     try {
+        const { status } = req.params;
         const videoRes = yield vModel.findDataLength(status);
         res.status(200).send({ 'length': videoRes });
     }

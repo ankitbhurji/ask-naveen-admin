@@ -41,13 +41,12 @@ class videoModel {
             });
         };
         this.updateOne = (channelDetails) => {
-            const sql = `UPDATE nj_channel SET ? WHERE id = ?`;
+            const sql = `UPDATE nj_videos SET ? WHERE id = ?`;
             //update not created in utils as not needed
         };
         this.findDataLength = (status) => {
             const statusStr = status == 'Y' ? status : status == 'N' ? status : 'Y';
-            const sql = `SELECT COUNT(*) FROM nj_videos
-                    WHERE status='${statusStr}'`;
+            const sql = `SELECT COUNT(*) FROM nj_videos WHERE status='${statusStr}'`;
             return new Promise((resolve, reject) => {
                 db_1.default.query(sql, (err, res) => {
                     if (err)

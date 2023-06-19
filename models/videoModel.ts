@@ -42,13 +42,12 @@ export class videoModel{
         })
     }
     updateOne = (channelDetails:IVideoDataType) => {
-        const sql = `UPDATE nj_channel SET ? WHERE id = ?`
+        const sql = `UPDATE nj_videos SET ? WHERE id = ?`
         //update not created in utils as not needed
     }
     findDataLength = (status:string) => {
         const statusStr = status=='Y'?status: status=='N'?status: 'Y'
-        const sql = `SELECT COUNT(*) FROM nj_videos
-                    WHERE status='${statusStr}'`
+        const sql = `SELECT COUNT(*) FROM nj_videos WHERE status='${statusStr}'`
         return new Promise((resolve, reject)=>{
           db.query(sql, (err:any, res:unknown)=>{
             if(err) reject(err)

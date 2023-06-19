@@ -20,7 +20,7 @@ export class channelModel{
     const sortByStr = sortBy=='Roll No'? 'rollNumber': sortBy=='Views'? 'views' : sortBy=='Daily Views'? 'dailyViews': sortBy=='Subscribers'? 'subscriber':'addDateTime'
 
     const sql = `SELECT * FROM nj_channel WHERE status='${statusStr}' ${searchStr} ORDER BY ${sortByStr} ${orderByStr} LIMIT ${limitStr} OFFSET ${limitStr*pageStr}`
-    console.log(sql);
+    // console.log(sql);
     return new Promise((resolve, reject)=>{
       db.query(sql, (err:any, result:(IChannelType | PromiseLike<IChannelType | undefined> | undefined)[])=>{
         if(err) return reject(err)
@@ -72,6 +72,18 @@ export class channelModel{
       )
     })
   }
+  findDataLength = (status:string) => {
+    const statusStr = status=='Y'?status: status=='N'?status: 'Y'
+    const sql = `SELECT COUNT(*) FROM nj_channel
+    WHERE status='${statusStr}'`
+    return new Promise((resolve, reject)=>{
+      db.query(sql, (err:any, res:unknown)=>{
+        if(err) reject(err)
+        resolve(res)
+      })
+    })
+  }
+  
   // findSearch = (search:string) => {
   //   const sql = `SELECT * FROM nj_channel 
   //   WHERE search LIKE '%${search}%' AND status='Y'`
@@ -82,18 +94,6 @@ export class channelModel{
   //     })
   //   })
   // }
-  findDataLength = (status:string) => {
-    const statusStr = status=='Y'?status: status=='N'?status: 'Y'
-    const sql = `SELECT COUNT(*) FROM nj_channel
-                WHERE status='${statusStr}'`
-    return new Promise((resolve, reject)=>{
-      db.query(sql, (err:any, res:unknown)=>{
-        if(err) reject(err)
-        resolve(res)
-      })
-    })
-  }
-
   // create = (channleData:IChannelDataType): Promise<number | undefined>=> {
   //     const sql = "INSERT INTO nj_channel SET ?";
   //     const params = {

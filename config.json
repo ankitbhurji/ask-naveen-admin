@@ -1,7 +1,7 @@
 {
     "app":{
         "port":"9721",
-        "origin":[],
+        "origin":[], 
         "allowOrigin":["Access-Control-Allow-Origin"],
         "allowedMethod":["GET"],
         "alloowedHeaders":["platform","content-type"]

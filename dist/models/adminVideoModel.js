@@ -73,9 +73,7 @@ class adminVideoModel {
         };
         this.findDataLength = (status) => {
             const statusStr = status == 'Y' ? status : status == 'N' ? status : 'Y';
-            const sql = `SELECT COUNT(*) FROM nj_admin_video
-                    WHERE status='${statusStr}'`;
-            console.log(sql);
+            const sql = `SELECT COUNT(*) FROM nj_admin_video WHERE status='${statusStr}'`;
             return new Promise((resolve, reject) => {
                 db_1.default.query(sql, (err, res) => {
                     if (err)
@@ -120,8 +118,7 @@ class adminVideoModel {
         //     })
         // }
         this.updateOne = (details) => {
-            const sql = `UPDATE nj_admin_video SET ? 
-                    WHERE id = ?`;
+            const sql = `UPDATE nj_admin_video SET ? WHERE id = ?`;
             const id = details.id;
             const search = details.videoTitle.toLowerCase() + ' ' +
                 details.videoTags.toLowerCase() + ' ' +
