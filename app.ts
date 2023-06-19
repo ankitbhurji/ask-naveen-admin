@@ -10,6 +10,7 @@ import config from './config/index';
 //Middleware
 import { authorize } from "./middlewares/jwtMiddleware";
 import { videoRouter } from "./routes/videoRouter";
+import { viralTagLineRouter } from "./routes/viralTagLineRouter";
 
 const app = express();
 dotenv.config();
@@ -32,6 +33,7 @@ app.use("/nodeapi/channel", channelRouter);
 app.use("/nodeapi/adminvideo", adminVideoRouter)
 app.use('/nodeapi/video', videoRouter)
 app.use('/nodeapi/setting', settingRouter)
+app.use('/nodeapi/tag', viralTagLineRouter)
 app.use('/nodeapi/user', userRouter)
 
 app.listen(config.port, () => {
