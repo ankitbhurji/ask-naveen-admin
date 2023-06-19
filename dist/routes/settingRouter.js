@@ -18,40 +18,58 @@ const settingModel_1 = require("../models/settingModel");
 const settingRouter = express_1.default.Router();
 exports.settingRouter = settingRouter;
 const stModel = new settingModel_1.settingModel();
-settingRouter.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // const {page, pagelimit} = req.params
-    // const settingRes  = await stModel.findByLimit(page, pagelimit)
-    // res.send({'data':settingRes})
-    const tableSetting = req.body;
+settingRouter.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const tableSetting = req.body;
         const adminVideoRes = yield stModel.findByLimit(tableSetting);
         res.status(200).json({ "data": adminVideoRes });
     }
     catch (err) {
+        console.log('error:', err);
         res.status(400).json({ 'data': err });
     }
 }));
-settingRouter.get('/find/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const settingRes = yield stModel.findOne(id);
-    res.status(200).json({ 'data': settingRes });
+settingRouter.get('/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { id } = req.params;
+        const settingRes = yield stModel.findOne(id);
+        res.status(200).json({ 'data': settingRes });
+    }
+    catch (err) {
+        console.log('error:', err);
+        res.status(400).json({ 'data': err });
+    }
 }));
 settingRouter.post('/updateone', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const settingDetails = req.body;
-    const settingRes = yield stModel.updateOne(settingDetails);
-    res.status(200).json({ 'data': settingRes });
+    try {
+        const settingDetails = req.body;
+        console.log(settingDetails);
+        const settingRes = yield stModel.updateOne(settingDetails);
+        res.status(200).json({ 'data': settingRes });
+    }
+    catch (err) {
+        console.log('error:', err);
+        res.status(400).json({ 'data': err });
+    }
 }));
-settingRouter.get('/length', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const settingRes = yield stModel.findDataLength();
-    res.status(200).send({ 'length': settingRes });
+settingRouter.get('/length/all', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const settingRes = yield stModel.findDataLength();
+        res.status(200).send({ 'length': settingRes });
+    }
+    catch (err) {
+        console.log('error:', err);
+        res.status(400).json({ 'data': err });
+    }
 }));
-settingRouter.get('/:settingkey', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { settingkey } = req.params;
-    const settingRes = yield stModel.findSettingValue(settingkey);
-    res.send(settingRes);
-}));
-settingRouter.get('/search/:searchField', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { searchField } = req.params;
-    const settingRes = yield stModel.findSearch(searchField);
-    res.status(200).json({ 'data': settingRes });
+settingRouter.get('/settingvalue/:settingkey', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { settingkey } = req.params;
+        const settingRes = yield stModel.findSettingValue(settingkey);
+        res.send({ data: settingRes });
+    }
+    catch (err) {
+        console.log('error:', err);
+        res.status(400).json({ 'data': err });
+    }
 }));

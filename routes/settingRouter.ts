@@ -3,45 +3,67 @@ import { settingModel } from "../models/settingModel";
 const settingRouter = express.Router();
 const stModel = new settingModel()
 
-settingRouter.get('/', async(req, res)=>{
-    // const {page, pagelimit} = req.params
-    // const settingRes  = await stModel.findByLimit(page, pagelimit)
-    // res.send({'data':settingRes})
-
-    const tableSetting = req.body
+settingRouter.post('/', async(req, res)=>{
     try{
+        const tableSetting = req.body
         const adminVideoRes = await stModel.findByLimit(tableSetting)
         res.status(200).json({"data":adminVideoRes})
     }catch(err){
+        console.log('error:',err);
         res.status(400).json({'data': err})
     }
 })
-settingRouter.get('/find/:id', async(req, res)=>{
-    const {id} = req.params
-    const settingRes = await stModel.findOne(id)
-    res.status(200).json({'data':settingRes})
+settingRouter.get('/:id', async(req, res)=>{   
+    try {
+        const {id} = req.params
+        const settingRes = await stModel.findOne(id)
+        res.status(200).json({'data':settingRes})
+    } catch (err) {
+        console.log('error:',err);
+        res.status(400).json({'data': err})
+    }
 })
 settingRouter.post('/updateone', async(req, res)=>{
-    const settingDetails = req.body
-    const settingRes = await stModel.updateOne(settingDetails)
-    res.status(200).json({'data':settingRes})
+    try {
+        const settingDetails = req.body
+        console.log(settingDetails);
+        const settingRes = await stModel.updateOne(settingDetails)
+        res.status(200).json({'data':settingRes})
+    } catch (err) {
+        console.log('error:',err);
+        res.status(400).json({'data': err})
+    }
+})
+settingRouter.get('/length/all', async(req, res)=>{
+    try {
+        const settingRes = await stModel.findDataLength()
+        res.status(200).send({'length':settingRes})
+    } catch (err) {
+        console.log('error:',err);
+        res.status(400).json({'data': err})
+    }
+})
+settingRouter.get('/settingvalue/:settingkey', async(req, res)=>{
+    try {
+        const {settingkey}  = req.params
+        const settingRes = await stModel.findSettingValue(settingkey)
+        res.send({data:settingRes})
+    } catch (err) {
+        console.log('error:',err);
+        res.status(400).json({'data': err})
+    }
 })
 
-settingRouter.get('/length', async(req, res)=>{
-    const settingRes = await stModel.findDataLength()
-    res.status(200).send({'length':settingRes})
-})
 
-settingRouter.get('/:settingkey', async(req, res)=>{
-    const {settingkey}  = req.params
-    const settingRes = await stModel.findSettingValue(settingkey)
-    res.send(settingRes)
-})
-
-settingRouter.get('/search/:searchField', async(req, res)=>{
-    const {searchField} = req.params
-    const settingRes = await stModel.findSearch(searchField)
-    res.status(200).json({'data':settingRes})
-})
+// settingRouter.get('/search/:searchField', async(req, res)=>{
+//     try {
+//         const {searchField} = req.params
+//         const settingRes = await stModel.findSearch(searchField)
+//         res.status(200).json({'data':settingRes})
+//     } catch (err) {
+//         console.log('error:',err);
+//         res.status(400).json({'data': err})
+//     }
+// })
 
 export {settingRouter}

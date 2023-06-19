@@ -10,16 +10,19 @@ class settingModel {
         this.findByLimit = (tableSetting) => {
             const limit = tableSetting.pageLimit;
             const page = tableSetting.page;
-            // const search = tableSetting.searchFieldInSettingModel 
-            // return new Promise((resolve, reject)=>{
-            //     db.query(
-            //         `SELECT * FROM nj_setting LIMIT ${+pageLimit} OFFSET ${+pageLimit*+page}`,
-            //         (err: any, res: unknown)=>{
-            //             if(err) reject(err)
-            //             resolve(res)
-            //         }
-            //     )
-            // })
+            const search = tableSetting.search;
+            const limitStr = limit ? limit : 10;
+            const pageStr = page ? page : 0;
+            const searchStr = search != "" && search != undefined ? search : '';
+            return new Promise((resolve, reject) => {
+                const sql = `SELECT * FROM nj_setting WHERE settingKey like '%${searchStr}%' LIMIT ${limitStr} OFFSET ${pageStr * limitStr}`;
+                console.log(sql);
+                db_1.default.query(sql, (err, res) => {
+                    if (err)
+                        reject(err);
+                    resolve(res);
+                });
+            });
         };
         this.findOne = (id) => {
             return new Promise((resolve, reject) => {
@@ -33,6 +36,7 @@ class settingModel {
         this.updateOne = (details) => {
             const sql = `UPDATE nj_setting SET ? WHERE id = ?`;
             const id = details.id;
+            console.log(details);
             const params = {
                 settingKey: details.settingKey,
                 settingValue: details.settingValue,
@@ -55,16 +59,6 @@ class settingModel {
                 });
             });
         };
-        this.findSearch = (search) => {
-            const sql = `SELECT * FROM nj_setting WHERE settingKey LIKE '%${search}%'`;
-            return new Promise((resolve, reject) => {
-                db_1.default.query(sql, (err, res) => {
-                    if (err)
-                        reject(err);
-                    resolve(res);
-                });
-            });
-        };
         this.findSettingValue = (settingkey) => {
             return new Promise((resolve, reject) => {
                 db_1.default.query("SELECT settingValue FROM nj_setting WHERE settingKey = ?", [settingkey], (err, res) => {
@@ -74,6 +68,15 @@ class settingModel {
                 });
             });
         };
+        // findSearch = (search:string) => {
+        //     const sql = `SELECT * FROM nj_setting WHERE settingKey LIKE '%${search}%'`
+        //     return new Promise((resolve, reject)=>{
+        //         db.query(sql, (err: any, res: unknown)=>{
+        //             if(err) reject(err)
+        //             resolve(res)
+        //         })
+        //     })
+        // }
     }
 }
 exports.settingModel = settingModel;
